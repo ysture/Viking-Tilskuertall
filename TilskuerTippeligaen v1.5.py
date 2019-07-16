@@ -33,7 +33,7 @@ class Fotballag:
 viking = Fotballag('Viking', 'Viking Stadion', 'Stavanger')
 viking.derbylag = ['Sandnes Ulf', 'Haugesund', 'Bryne']
 
-valerenga = Fotballag('Vålerenga', 'Ullevaal Stadion ', 'Oslo')
+valerenga = Fotballag('Vålerenga', 'Ullevaal Stadion', 'Oslo')
 valerenga.derbylag = ['Lyn', 'Stabæk', 'Lillestrøm', 'Strømsgodset']
 
 brann = Fotballag('Brann', 'Brann Stadion', 'Bergen')
@@ -56,14 +56,14 @@ molde.derbylag = ['Aalesund', 'Kristiansund']
 aalesund = Fotballag('Aalesund', 'Color Line Stadion', 'Aalesund')
 aalesund.derbylag = ['Molde']
 
-kristiansund = Fotballag('Kristiansund BK', 'Kristiansund Stadion', 'Kristiansund')
+kristiansund = Fotballag('Kristiansund BK', 'Karihola', 'Kristiansund')
 kristiansund.derbylag = ['Molde']
 
 start = Fotballag('Start', 'Sør Arena', 'Kristiansand')
 
 tromso= Fotballag('Tromsø', 'Alfheim Stadion', 'Tromsø')
 
-hamkam = Fotballag('HamKam', 'Briskeby Stadion', 'Hamar')
+hamkam = Fotballag('HamKam', 'Hamar', 'Hamar')
 
 fredrikstad = Fotballag('Fredrikstad', 'Fredrikstad Stadion', 'Fredrikstad')
 fredrikstad.derbylag = ['Sarpsborg 08', 'Moss']
@@ -417,7 +417,7 @@ from geopy.geocoders import Nominatim
 def coord_stadium(stadium):
     try:
         geolocator = Nominatim(user_agent='myapplication')
-        location = geolocator.geocode(stadium)
+        location = geolocator.geocode(stadium, timeout=15)
         lon = location.longitude
         lat = location.latitude
         coord = (lon, lat)
@@ -429,10 +429,9 @@ def coord_stadium(stadium):
 # Finner koordinater for alle lag. "Stadium"-attributten i klassen blir da en dictionary der 'Key' er stadionnavn og 'Value' er koordinater til stadion.
 start_coord = time.time() # For å ta tiden på hvor lang tid det tar å finne koordinater
 for team in Fotballag.instances:
-    for key in team.stadium.keys():
-        coord = coord_stadium(key)
-        team.stadium[key] = coord
-        print('Fant koordinater for ' + key)
+    coord = coord_stadium(team.stadium)
+    team.stadium = {team.stadium : coord}
+    #print('Fant koordinater for ' + team)
 
 
 # Finner de nest nærmeste værstasjone for alle lag i Fotballag.instances uten å laste ned informasjon om alle værstasjonene i Norge (som ble gjort i v1.2)
