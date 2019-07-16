@@ -382,16 +382,11 @@ for team in Fotballag.instances: # Iterater gjennom alle fotballagene jeg har la
         else:
             dfSesong.set_value(ii[0], 'Form5', "For få kamper")    # Dersom indeks i dfTemporary ikke er større enn 4, er kampen nødt til å være den første i sesongen
 
-# Finner antall scorede mål forrige hjemmekamp (for hjemmelaget) og lager en liste med alle forskjellige stadionnavn som lagres som lagres i objektet til laget
+# Finner antall scorede mål forrige hjemmekamp (for hjemmelaget)
 for team in Fotballag.instances: # Iterater gjennom alle fotballagene jeg har lagt inn
     dfTemporary = dfSesong[(dfSesong.Hjemmelag == team.name)] # Lager en midlertidig df for hvert lag
     new_index = list(range(0, len(dfTemporary.Dato)))   # Lager en ny index slik at man kan hente resultat for riktig lag. Indeksen fra dfSesong følger over til dfTemporary, så dette er nødvendig.
     dfTemporary = dfTemporary.set_index([dfTemporary.index, new_index]) # Setter inn den nye indeksen
-    stadiums = list(set(dfTemporary.Stadion))
-    stadiums_dict = {}
-    for s in stadiums:
-        stadiums_dict[s] = ''
-    team.stadium = stadiums_dict
     for ii, rows in dfTemporary.iterrows(): # Iterater gjennom dfTemporary
         if ii[1] > 0:   # Den første hjemmekampen for hvert lag vil alltid ha indeks 0
             if dfTemporary.iloc[ii[1]]['Dato'][-4:] == dfTemporary.iloc[ii[1]-1]['Dato'][-4:]:  # Sjekker at årene for de to resultatene som sammenlignes er like
