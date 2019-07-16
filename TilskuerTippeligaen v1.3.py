@@ -112,7 +112,6 @@ urlKode = list(range(340-(2018-fraSesong),341))
 sesonger = list(range(2018-(urlKode[-1]-urlKode[0]),2019))         # liste med alle sesonger
 
 
-
 # Samler url-ene for de forskjelligene sesongene i en liste
 urlSesonger = []
 for url in urlKode:
@@ -213,15 +212,20 @@ for url in urlSesonger:
         if i not in urlKamper:
             urlKamper.append(i)
 
+
+
 # går inn i hver enkelt kamp og finner tilskuertallet
 # Lager en liste med sesongene fra 2001-2007 for å kunne sette alle hovedkampene som tv-kamper
 klokkeslett = []
 urlKode_01_07 = [323,324,325,326,327,328,329]
+stadium_list = []
 for url in urlKamper:
     page1 = requests.get(url)
     soup = BeautifulSoup(page1.content, "html.parser")
     print("Henter inn data om tilskuertall for kamp "+ str(urlKamper.index(url)+1) +" ...")
     tilskuertallUordnet = soup.find_all(text=re.compile('Tilskuere'), limit=1)
+    arena = soup.find_all(class_='sd_game_home')
+    stadium_list.append(re.search('.*\\t(.*)Tilskuere:', arena[1].text).group(1))
     for tall in tilskuertallUordnet:
         tilskuertall.append(tall[11:])
     # sjekker om kampen er i sesong 01-07, for å kunne finne klokkeslett for å vurdere eventuell hovedkamp
@@ -260,7 +264,7 @@ form5 = ["-"]*len(datoerOrdnet)
 maal_forrige_hjemmekamp = ["-"]*len(datoerOrdnet)
 derby = ["-"]*len(datoerOrdnet)
 rival = ["-"]*len(datoerOrdnet)
-temperatur = ["-"]*len(datoerOrdnet)
+temperature = ["-"]*len(datoerOrdnet)
 wind = ["-"]*len(datoerOrdnet)
 downfall = ["-"]*len(datoerOrdnet)
 
@@ -273,7 +277,7 @@ HovedDataSet = list(zip(datoerOrdnet,
                         tilskuertall,
                         hjemmelagGoals, bortelagGoals, resultater,
                         form1, form3, form5, maal_forrige_hjemmekamp,
-                        tv_kanal))
+                        tv_kanal, stadium_list))
     # lager tabellen med pandas
 dfSesong = pandas.DataFrame(data=HovedDataSet,
                                 columns=['Dato',
@@ -281,7 +285,7 @@ dfSesong = pandas.DataFrame(data=HovedDataSet,
                                          'Tilskuertall',
                                          'Mål_hjemmelag', 'Mål_bortelag', 'Resultat',
                                          'Form1', 'Form3', 'Form5', 'Mål forrige hjemmekamp',
-                                         'TV-kanal'])
+                                         'TV-kanal', 'Stadion'])
 
 print("Ferdig å lage datasettet.")
 
@@ -377,11 +381,16 @@ for team in Fotballag.instances: # Iterater gjennom alle fotballagene jeg har la
         else:
             dfSesong.set_value(ii[0], 'Form5', "For få kamper")    # Dersom indeks i dfTemporary ikke er større enn 4, er kampen nødt til å være den første i sesongen
 
-# Finner antall scorede mål forrige hjemmekamp (for hjemmelaget)
+# Finner antall scorede mål forrige hjemmekamp (for hjemmelaget) og lager en liste med alle forskjellige stadionnavn som lagres som lagres i objektet til laget
 for team in Fotballag.instances: # Iterater gjennom alle fotballagene jeg har lagt inn
     dfTemporary = dfSesong[(dfSesong.Hjemmelag == team.name)] # Lager en midlertidig df for hvert lag
     new_index = list(range(0, len(dfTemporary.Dato)))   # Lager en ny index slik at man kan hente resultat for riktig lag. Indeksen fra dfSesong følger over til dfTemporary, så dette er nødvendig.
     dfTemporary = dfTemporary.set_index([dfTemporary.index, new_index]) # Setter inn den nye indeksen
+    stadiums = list(set(dfTemporary.Stadion))
+    stadiums_dict = {}
+    for s in stadiums:
+        stadiums_dict[s] = ''
+    team.wsta = stadiums_dict
     for ii, rows in dfTemporary.iterrows(): # Iterater gjennom dfTemporary
         if ii[1] > 0:   # Den første hjemmekampen for hvert lag vil alltid ha indeks 0
             if dfTemporary.iloc[ii[1]]['Dato'][-4:] == dfTemporary.iloc[ii[1]-1]['Dato'][-4:]:  # Sjekker at årene for de to resultatene som sammenlignes er like
@@ -425,125 +434,109 @@ for team in Fotballag.instances:
     coord = coord_stadium(team.stadium)
     team.stadium = {'Name':team.stadium, 'Coord' : coord}
 
-#-------------------------------------------------#
 
-# Laster ned informasjon om alle værstasjoner i Norge (kan hende man må iterate denne listen for å finne nærmeste værstasjon for hver stadion
-client_id = '0bc47091-15bd-4a22-93d6-9f262a1e91a2'
-endpoint1 = 'https://frost.met.no/sources/v0.jsonld?types=SensorSystem&country=NO&fields=id,name,geometry'
-r = requests.get(endpoint1,auth=(client_id,''))
-json = r.json()
-wstations_list = json['data']
-
-    # lager en dataframe der informasjon om alle værstasjonene i Norge er samlet
-wstations_df = pandas.DataFrame(columns=['id', 'name', 'lon', 'lat'])
-for i in range(len(wstations_list)-7):
-    wstations_df.set_value(i,'id', wstations_list[i]['id'])
-    wstations_df.set_value(i,'name', wstations_list[i]['name'])
-    try:
-        wstations_df.set_value(i,'lon', wstations_list[i]['geometry']['coordinates'][0])
-        wstations_df.set_value(i,'lat', wstations_list[i]['geometry']['coordinates'][1])
-    except:
-        print('{error} occured for {name} (nr {i}).'.format(error=sys.exc_info()[0], name=wstations_list[i]['name'], i=i))
-
-# Funksjon laget for å finne nærmeste værstasjon til et gitt kandidat (funksjonen brukes i loopen nedenfor)
-def closest_wsta(coord):
-    shortest_distance = 10000
-    for i in range(len(wstations_df.index)-1):
-        try:
-            distance = geodesic(coord, (wstations_df.iloc[i,2],wstations_df.iloc[i,3]))
-            if distance < shortest_distance or shortest_distance is None:
-                shortest_distance = distance
-                closest = wstations_df.iloc[i,0]
-        except:
-            continue
-    return closest
-
-Fotballag.instances[10].wsta
-Fotballag.instances[0].stadium
-Fotballag.instances[0].wsta
-
-
-# Finner de nest nærmeste værstasjone for alle lag i Fotballag.instances, basert på hvor den nærmeste værstasjonen er
-    # Lager først en funksjon for å gjøre dette
+# Finner de nest nærmeste værstasjone for alle lag i Fotballag.instances uten å laste ned informasjon om alle værstasjonene i Norge (som blr gjort i v1.2)
+    # Lager først en funksjon for å gjøre dette, der coord er input. Denne er lagret i Stadium['Coord'] for hvert objekt i klassen Fotballag
 def closest_wsta(coord, additional_wsta = 5):
-    next_wstas = []
+    wsta = []
     client_id = '0bc47091-15bd-4a22-93d6-9f262a1e91a2'
-    endpoint = 'https://frost.met.no/sources/v0.jsonld?types=SensorSystem&geometry=nearest(POINT({lon}%{lat}))&nearestmaxcount={additional_wsta}'.format(
-        lon = coord[0],
-        lat = coord[1],
+    endpoint = 'https://frost.met.no/sources/v0.jsonld?types=SensorSystem&geometry=nearest(POINT({lon}%20{lat}))&nearestmaxcount={additional_wsta}'.format(
+        lon = str(coord[0]),
+        lat = str(coord[1]),
         additional_wsta = additional_wsta
     )
     r = requests.get(endpoint, auth=(client_id, ''))
     json = r.json()
     for station in json['data']:
-        next_wstas.append(station['id'])
+        wsta.append(station['id'])
+    return wsta
 
-    # Finner de fem neste værstasjonene for alle lag
-
-
-
-
-
-# Finner de fire neste nærmeste værstasjonene basert på den første
+    # Finner de fem neste værstasjonene for alle lag ved å bruke funksjonen ovenfor
 for team in Fotballag.instances:
-    try:
-        coord = team.stadium['Coord']
-        team.wsta = closest_wsta(coord)
-        print('Fant koordinatene til ' + team.name)
-    except:
-        print('Problemer med {team}'.format(team=team))
-
+    print('Finner værstasjoner for ' + team.name + '...')
+    coord = team.stadium['Coord']
+    team.wsta = closest_wsta(coord, 10)
 
 #-------------------------------------------------#
-# Finner temperatur, nedbør og vindstyrke den aktuelle dagen
-temperatur = []
+# Finner temperature, vindstyrke og nedbør den aktuelle dagen
+temperature = []
 wind = []
-team.name
+precipitation = []
 for i in range(len(dfSesong.index)):      # for i in range(len(dfSesong.index)): (den linjen som egentlig skal være her)
-    print('Vær for kamp ' + str(i+1) + '...')
+    # print('Vær for kamp ' + str(i+1) + '...') Overflødig når man faktisk finner vind og temperature for de fleste kamper
     hour=15 # Klokkeslett (Time)
-    tempObs = '' # Lager tempObs-variabelen slik at det lett kan sjekkes om temperatur har blitt funnet for hver kamp
+    tempObs = '' # Lager tempObs-variabelen slik at det lett kan sjekkes om temperature har blitt funnet for hver kamp
     windObs = '' # Lager windObs-variabelen slik at det lett kan sjekkes om vind har blitt funnet for hver kamp
+    precipObs = ''
     for team in Fotballag.instances:
         if dfSesong.iloc[i,1] == team.name:
             client_id = '0bc47091-15bd-4a22-93d6-9f262a1e91a2'
-            endpoint = 'https://frost.met.no/observations/v0.jsonld?sources={wsta}&referencetime={year}-{month}-{day}&elements=air_temperature%2Cwind_speed%2Cprecipitation_amount'.format(
-                wsta=team.wsta,
-                year=dfSesong.iloc[i,0][-4:],
-                month=dfSesong.iloc[i,0][3:5],
-                day=dfSesong.iloc[i,0][0:2],
-                hour=hour)
-            r = requests.get(endpoint,auth=(client_id,''))
-            json = r.json()
-            try:
-                for key in json['data'][0]['observations']:
-                    for value in (key.values()):
+            wsta_string = ''
+            for wsta in team.wsta: # Lager en string med alle værstasjoner for hjemmelaget, med '%2C' istedenfor alle mellomrom
+                wsta_string = (wsta_string + '%2C' + wsta)
+            wsta_string = wsta_string[3:]
+            if not tempObs or not windObs or not precipObs:
+                endpoint = 'https://frost.met.no/observations/v0.jsonld?sources={wsta}&referencetime={year}-{month}-{day}&elements=air_temperature%2Cwind_speed%2Csum(precipitation_amount%20P1D)'.format(
+                    wsta=wsta_string,
+                    year=dfSesong.iloc[i,0][-4:],
+                    month=dfSesong.iloc[i,0][3:5],
+                    day=dfSesong.iloc[i,0][0:2],
+                    hour=hour)
+                r = requests.get(endpoint,auth=(client_id,''))
+                json = r.json()
+                if not tempObs:
+                    for elem in range(0,len(json['data'])):
                         if not tempObs:
-                            if value == 'air_temperature':
-                                tempObs = list(key.values())[list(key.values()).index('air_temperature') + 1]
-                                temperatur.append(tempObs)
-                                print('Fant temperatur for kamp ' + str(i))
-            except:
-                continue
-            try:
-                for key in json['data'][0]['observations']:
-                    for value in (key.values()):
+                            try:
+                                for key in json['data'][elem]['observations']:
+                                    for value in (key.values()):
+                                        if not tempObs:
+                                            if value == 'air_temperature':
+                                                tempObs = list(key.values())[list(key.values()).index('air_temperature') + 1]
+                                                temperature.append(tempObs)
+                                                print('Fant temperatur for kamp ' + str(i+1))
+                            except:
+                                continue
+                if not windObs:
+                    for elem in range(0,len(json['data'])):
                         if not windObs:
-                            if value == 'wind_speed':
-                                windObs = list(key.values())[list(key.values()).index('wind_speed') + 1]
-                                wind.append(windObs)
-                                print('Fant vind for kamp ' + str(i))
-            except:
-                continue
+                            try:
+                                for key in json['data'][elem]['observations']:
+                                    for value in (key.values()):
+                                        if not windObs:
+                                            if value == 'wind_speed':
+                                                windObs = list(key.values())[list(key.values()).index('wind_speed') + 1]
+                                                wind.append(windObs)
+                                                print('Fant vind for kamp ' + str(i+1))
+                            except:
+                                continue
+                if precipObs == '':
+                    for elem in range(0,len(json['data'])):
+                        if precipObs == '':
+                            try:
+                                for key in json['data'][elem]['observations']:
+                                    for value in (key.values()):
+                                        if value == 'sum(precipitation_amount P1D)' and precipObs == '':
+                                            precipObs = list(key.values())[list(key.values()).index('sum(precipitation_amount P1D)') + 1]
+                                            precipitation.append(precipObs)
+                                            print('Fant nedbør for kamp ' + str(i+1))
+                            except:
+                                continue
     if not tempObs:
-        temperatur.append('-')
+        temperature.append('-')
     if not windObs:
         wind.append('-')
+    if not precipObs and precipObs != 0:
+        precipitation.append('-')
+
+# Legger data over vind og temperature til dfSesong
+dfSesong['Temp'] = temperature[:-1]
+dfSesong['Vind'] = wind[:-1]
+dfSesong['Precip'] = precipitation
 
 
-# Legger data over vind og temperatur til dfSesong
-dfSesong['Temp'] = temperatur
-dfSesong['Vind'] = wind
+
+
 #-------------------------------------------------#
 
 # Lager en funksjon for enkel lagring

@@ -1,0 +1,241 @@
+;Dato;Hjemmelag;Bortelag;Tilskuertall;Mål_hjemmelag;Mål_bortelag;Resultat;Form1;Form3;Form5;Mål forrige hjemmekamp;TV-kanal;Stadion;Ukedag;16. mai;Derby;Temp;Vind;Precip;Temp.dist;Wind.dist;Precip.dist
+25;08.04.2018;Tromsø;Ranheim TF;3 028;4;0;V;V;For få kamper;For få kamper;Første hjemmekamp i sesongen;Eurosport Player;Alfheim stadion;7;0;;-2,2;5,9;8,5;37,72;42,10;113,35
+28;11.04.2018;Tromsø;Strømsgodset;2 908;3;1;V;V;VVV;For få kamper;4;MAX;Alfheim stadion;3;0;;1,2;6,1;6,5;37,72;42,10;113,35
+43;22.04.2018;Tromsø;Sandefjord;3 692;4;1;V;U;UTU;UTUTV;3;Eurosport Player;Alfheim stadion;7;0;;2,9;7,5;0;37,72;42,10;113,35
+53;29.04.2018;Tromsø;Kristiansund BK;4 131;0;0;U;V;VUV;VUVVV;4;Eurosport Player;Alfheim stadion;7;0;;0,1;1,9;2;37,72;42,10;113,35
+70;13.05.2018;Tromsø;Lillestrøm;3 885;1;2;T;V;VVT;VVTVV;0;Eurosport Player;Alfheim stadion;7;0;;9,1;3,2;0;37,72;42,10;113,35
+86;21.05.2018;Tromsø;Vålerenga;3 914;3;0;V;T;TTV;TTVUV;1;Eurosport Player;Alfheim stadion;1;0;;7,6;4,8;11,5;37,72;42,10;113,35
+103;11.06.2018;Tromsø;Rosenborg;5 214;2;1;V;V;VVT;VVTTV;3;MAX;Alfheim stadion;1;0;;5,0;6,3;3;37,72;42,10;113,35
+117;01.07.2018;Tromsø;Odd;3 387;2;1;V;T;TUT;TUTVV;2;Eurosport Pluss;Alfheim stadion;7;0;;7,8;9,7;0;37,72;42,10;113,35
+132;05.08.2018;Tromsø;Haugesund;3 713;1;2;T;V;VVU;VVUTV;2;Eurosport Pluss;Alfheim stadion;7;0;;11,5;4,7;1,5;37,72;42,10;113,35
+152;25.08.2018;Tromsø;Bodø/Glimt;4 701;1;2;T;U;UVV;UVVUU;1;Eurosport Norge;Alfheim stadion;6;0;;12,2;5,5;1;37,72;42,10;113,35
+173;16.09.2018;Tromsø;Stabæk;3 473;0;0;U;U;UVV;UVVUT;1;Eurosport Pluss;Alfheim stadion;7;0;;6,8;2,9;0;37,72;42,10;113,35
+191;01.10.2018;Tromsø;Brann;3 538;2;1;V;V;VUT;VUTTV;0;MAX;Alfheim stadion;1;0;;4,2;1,7;3;37,72;42,10;113,35
+206;21.10.2018;Tromsø;Start;3 116;1;2;T;V;VVV;VVVUT;2;Eurosport Pluss;Alfheim stadion;7;0;;6,0;11,8;4;37,72;42,10;113,35
+217;04.11.2018;Tromsø;Molde;3 130;2;4;T;V;VTV;VTVVV;1;Eurosport Norge;Alfheim stadion;7;0;;4,1;9,6;3;37,72;42,10;113,35
+238;24.11.2018;Tromsø;Sarpsborg 08;2 998;0;2;T;U;UUV;UUVUV;2;Eurosport Pluss;Alfheim stadion;6;0;;3,4;10,7;17,6;37,72;42,64;113,35
+2;11.03.2018;Molde;Sandefjord;6 218;5;0;V;Første kamp i sesongen;For få kamper;For få kamper;Første hjemmekamp i sesongen;Eurosport Player;Aker Stadion;7;0;;-3,0;3,6;0;38,89;38,89;60,87
+16;02.04.2018;Molde;Tromsø;6 438;2;1;V;V;For få kamper;For få kamper;5;Eurosport Player;Aker Stadion;1;0;;-4,8;3,7;0,9;38,89;38,89;60,87
+31;15.04.2018;Molde;Lillestrøm;7 411;2;1;V;V;VVU;For få kamper;2;Eurosport Norge;Aker Stadion;7;0;;10,2;0,9;0;38,89;38,89;60,87
+50;29.04.2018;Molde;Odd;6 793;0;1;T;V;VVV;VVVUV;2;Eurosport Player;Aker Stadion;7;0;;0,2;3,6;0,1;38,89;38,89;60,87
+68;13.05.2018;Molde;Bodø/Glimt;6 768;1;2;T;U;UUU;UUUTV;0;Eurosport Player;Aker Stadion;7;0;;8,2;2,5;0;38,89;38,89;60,87
+76;16.05.2018;Molde;Strømsgodset;6 770;2;0;V;T;TUT;TUTUV;1;Eurosport Player;Aker Stadion;3;1;;8,5;4,2;0,1;38,89;38,89;60,87
+89;27.05.2018;Molde;Start;6 335;3;1;V;V;VVT;VVTVT;2;Eurosport Norge;Aker Stadion;7;0;;10,3;5;0;38,89;38,89;60,87
+104;23.06.2018;Molde;Stabæk;6 294;3;0;V;U;UVV;UVVVT;3;Eurosport Norge;Aker Stadion;6;0;;3,3;4,8;0,5;38,89;38,89;60,87
+126;08.07.2018;Molde;Vålerenga;7 012;5;1;V;T;TVV;TVVVV;3;MAX;Aker Stadion;7;0;;9,2;1,8;0;38,89;38,89;60,87
+140;12.08.2018;Molde;Brann;7 640;5;1;V;U;UVT;UVTVV;5;Eurosport Pluss;Aker Stadion;7;0;;6,5;2;0,2;38,89;38,89;60,87
+156;26.08.2018;Molde;Ranheim TF;6 864;2;3;T;U;UUT;UUTVV;5;Eurosport Pluss;Aker Stadion;7;0;;4,4;2,3;2;38,89;38,89;60,87
+175;17.09.2018;Molde;Kristiansund BK;7 911;3;2;V;U;UTT;UTTVU;2;MAX;Aker Stadion;1;0;;6,5;11;1;38,89;38,89;60,87
+190;30.09.2018;Molde;Rosenborg;9 444;1;0;V;T;TVU;TVUTV;3;Eurosport Norge;Aker Stadion;7;0;;3,0;8,7;11,1;38,89;38,89;60,87
+200;20.10.2018;Molde;Sarpsborg 08;8 122;2;2;U;V;VTV;VTVTV;1;MAX;Aker Stadion;6;0;;4,0;4,6;0,2;38,89;38,89;60,87
+227;11.11.2018;Molde;Haugesund;6 641;2;0;V;V;VVV;VVVTV;2;Eurosport Pluss;Aker Stadion;7;0;;8,7;5,2;0;38,89;38,89;60,87
+1;11.03.2018;Bodø/Glimt;Lillestrøm;3 484;3;1;V;Første kamp i sesongen;For få kamper;For få kamper;Første hjemmekamp i sesongen;Eurosport Player;Aspmyra stadion;7;0;;-6,5;0,7;0,5;28,58;28,58;59,47
+14;02.04.2018;Bodø/Glimt;Haugesund;2 934;0;3;T;T;For få kamper;For få kamper;3;Eurosport Player;Aspmyra stadion;1;0;;-4,7;1,3;0,9;28,58;28,58;59,47
+37;16.04.2018;Bodø/Glimt;Rosenborg;4 387;0;1;T;V;VTV;For få kamper;0;MAX;Aspmyra stadion;1;0;;2,4;1;0;28,58;28,58;59,47
+58;06.05.2018;Bodø/Glimt;Strømsgodset;2 834;2;2;U;U;UUT;UUTVT;0;Eurosport Player;Aspmyra stadion;7;0;;12,3;10,3;13,5;28,58;28,58;59,47
+73;16.05.2018;Bodø/Glimt;Tromsø;4 731;0;1;T;T;TUU;TUUUT;2;VOX;Aspmyra stadion;3;1;;7,6;0,6;1;28,58;28,58;59,47
+90;27.05.2018;Bodø/Glimt;Ranheim TF;2 961;4;0;V;V;VTV;VTVUU;0;Eurosport Player;Aspmyra stadion;7;0;;7,4;4,2;0,2;28,58;28,58;59,47
+106;24.06.2018;Bodø/Glimt;Sandefjord;2 615;1;1;U;T;TVT;TVTVT;4;Eurosport Player;Aspmyra stadion;7;0;;7,6;8;0;28,58;28,58;59,47
+121;08.07.2018;Bodø/Glimt;Brann;3 082;2;2;U;U;UUU;UUUVV;1;Eurosport Norge;Aspmyra stadion;7;0;;7,6;0,7;0,3;28,58;28,58;59,47
+139;12.08.2018;Bodø/Glimt;Kristiansund BK;2 804;3;0;V;V;VUU;VUUUU;2;Eurosport Pluss;Aspmyra stadion;7;0;;10,9;2,2;5,6;28,58;28,58;59,47
+151;20.08.2018;Bodø/Glimt;Odd;2 881;1;1;U;U;UUV;UUVVT;3;MAX;Aspmyra stadion;1;0;;10,6;5,2;33,9;28,58;28,58;59,47
+163;02.09.2018;Bodø/Glimt;Sarpsborg 08;3 178;3;1;V;T;TVV;TVVTV;1;Eurosport Pluss;Aspmyra stadion;7;0;;13,5;2,7;0,5;28,58;28,58;59,47
+178;23.09.2018;Bodø/Glimt;Start;2 700;1;2;T;U;UVT;UVTUV;3;Eurosport Pluss;Aspmyra stadion;7;0;;7,5;7;46,2;28,58;28,58;59,47
+195;07.10.2018;Bodø/Glimt;Molde;2 781;0;1;T;V;VTU;VTUVT;1;Eurosport Pluss;Aspmyra stadion;7;0;;2,6;1;7,6;28,58;28,58;59,47
+210;28.10.2018;Bodø/Glimt;Stabæk;2 887;1;1;U;T;TUV;TUVVU;0;Eurosport Pluss;Aspmyra stadion;7;0;;-2,8;1,2;0;28,58;28,58;59,47
+226;11.11.2018;Bodø/Glimt;Vålerenga;4 023;1;1;U;U;UUU;UUUTV;1;Eurosport Pluss;Aspmyra stadion;7;0;;8,5;2,2;0;28,58;28,58;59,47
+6;12.03.2018;Kristiansund BK;Vålerenga;3 969;0;1;T;Første kamp i sesongen;For få kamper;For få kamper;Første hjemmekamp i sesongen;MAX;Kristiansund Stadion;1;0;;-2,3;0,3;0;35,12;35,12;57,66
+15;02.04.2018;Kristiansund BK;Lillestrøm;3 959;2;1;V;U;For få kamper;For få kamper;0;Eurosport Player;Kristiansund Stadion;1;0;;-7,0;0,5;1,9;35,12;35,12;57,66
+41;22.04.2018;Kristiansund BK;Bodø/Glimt;4 003;1;1;U;T;TVT;TVTVV;2;Eurosport Player;Kristiansund Stadion;7;0;;1,0;3,4;0,1;35,12;18,23;57,66
+59;06.05.2018;Kristiansund BK;Stabæk;3 914;1;0;V;V;VUV;VUVUU;1;Eurosport Player;Kristiansund Stadion;7;0;;8,8;0,7;9,6;35,12;35,12;57,66
+75;16.05.2018;Kristiansund BK;Ranheim TF;4 234;1;3;T;V;VUU;VUUTT;1;Eurosport Player;Kristiansund Stadion;3;1;;8,0;1,2;0;35,12;18,23;57,66
+81;21.05.2018;Kristiansund BK;Strømsgodset;3 886;4;0;V;T;TVV;TVVUU;1;Eurosport Player;Kristiansund Stadion;1;0;;11,4;4,7;0;35,12;18,23;57,66
+96;09.06.2018;Kristiansund BK;Molde;4 277;1;0;V;T;TVT;TVTVV;4;Eurosport Norge;Kristiansund Stadion;6;0;1;6,9;1,6;0;35,12;35,12;57,66
+115;01.07.2018;Kristiansund BK;Sarpsborg 08;3 978;1;1;U;T;TVV;TVVTV;1;Eurosport Pluss;Kristiansund Stadion;7;0;;12,1;1,6;0;35,12;35,12;57,66
+130;05.08.2018;Kristiansund BK;Odd;4 003;1;1;U;V;VVT;VVTUT;1;Eurosport Pluss;Kristiansund Stadion;7;0;;10,0;0,9;10,1;35,12;18,23;57,66
+144;19.08.2018;Kristiansund BK;Rosenborg;4 277;0;2;T;V;VUT;VUTUV;1;MAX;Kristiansund Stadion;7;0;;10,2;2,5;34,5;35,12;35,12;57,66
+165;02.09.2018;Kristiansund BK;Start;3 861;1;1;U;T;TUU;TUUVV;0;Eurosport Pluss;Kristiansund Stadion;7;0;;9,6;6,1;1,4;35,12;18,23;57,66
+180;23.09.2018;Kristiansund BK;Haugesund;3 753;2;1;V;T;TVV;TVVUV;1;Eurosport Pluss;Kristiansund Stadion;7;0;;5,0;1;13,9;35,12;35,12;57,66
+196;07.10.2018;Kristiansund BK;Tromsø;4 251;5;1;V;V;VVU;VVUTT;2;Eurosport Pluss;Kristiansund Stadion;7;0;;1,3;3,5;3;35,12;18,23;57,66
+211;28.10.2018;Kristiansund BK;Sandefjord;4 045;3;2;V;V;VUU;VUUUU;5;Eurosport Pluss;Kristiansund Stadion;7;0;;-2,9;2,1;0;35,12;35,12;57,66
+224;11.11.2018;Kristiansund BK;Brann;4 215;3;1;V;T;TVT;TVTVV;3;MAX;Kristiansund Stadion;7;0;;9,2;0,9;0,5;35,12;35,12;57,66
+5;11.03.2018;Sarpsborg 08;Rosenborg;5 201;1;0;V;Første kamp i sesongen;For få kamper;For få kamper;Første hjemmekamp i sesongen;Eurosport Norge;Sarpsborg Stadion;7;0;;-4,1;1,7;2,4;24,70;24,70;33,20
+13;02.04.2018;Sarpsborg 08;Vålerenga;6 149;3;0;V;U;For få kamper;For få kamper;1;Eurosport Norge;Sarpsborg Stadion;1;0;;-3,9;1;0,7;24,70;24,70;33,20
+36;15.04.2018;Sarpsborg 08;Brann;5 258;1;2;T;U;UVU;For få kamper;3;Eurosport Norge;Sarpsborg Stadion;7;0;;0,3;6,1;0,7;24,70;33,20;33,20
+51;29.04.2018;Sarpsborg 08;Bodø/Glimt;4 983;0;0;U;V;VTU;VTUVU;1;Eurosport Player;Sarpsborg Stadion;7;0;;-2,6;3,2;0;24,70;33,20;33,20
+63;07.05.2018;Sarpsborg 08;Molde;4 842;2;2;U;U;UVT;UVTUV;0;MAX;Sarpsborg Stadion;1;0;;9,1;3,8;0;24,70;24,70;33,20
+78;16.05.2018;Sarpsborg 08;Start;5 630;4;0;V;T;TUU;TUUVT;2;Eurosport Player;Sarpsborg Stadion;3;1;;9,0;2,7;0;24,70;33,20;33,20
+95;28.05.2018;Sarpsborg 08;Stabæk;4 658;4;2;V;T;TVT;TVTUU;4;MAX;Sarpsborg Stadion;1;0;;14,0;0,4;0,4;24,70;24,70;33,20
+105;24.06.2018;Sarpsborg 08;Tromsø;5 240;2;3;T;V;VVT;VVTVT;4;Eurosport Norge;Sarpsborg Stadion;7;0;;6,4;1,7;0,1;24,70;33,20;33,20
+124;08.07.2018;Sarpsborg 08;Ranheim TF;4 100;4;1;V;V;VVV;VVVVV;2;Eurosport Pluss;Sarpsborg Stadion;7;0;;6,8;3,4;0;24,70;33,20;33,20
+141;12.08.2018;Sarpsborg 08;Lillestrøm;4 947;2;0;V;U;UVU;UVUUU;4;Eurosport Pluss;Sarpsborg Stadion;7;0;;11,3;1,5;0;24,70;24,70;33,20
+154;26.08.2018;Sarpsborg 08;Kristiansund BK;4 773;1;2;T;V;VVT;VVTVU;2;Eurosport Norge;Sarpsborg Stadion;7;0;;5,5;0,1;0,1;24,70;24,70;33,20
+172;16.09.2018;Sarpsborg 08;Odd;4 886;1;2;T;V;VTV;VTVVT;1;Eurosport Pluss;Sarpsborg Stadion;7;0;;7,7;2,2;0;24,70;24,70;33,20
+189;30.09.2018;Sarpsborg 08;Strømsgodset;4 481;0;1;T;V;VTV;VTVTV;1;Eurosport Pluss;Sarpsborg Stadion;7;0;;10,0;6,1;0;24,70;24,70;33,20
+213;28.10.2018;Sarpsborg 08;Haugesund;4 555;2;1;V;V;VTV;VTVVT;0;Eurosport Pluss;Sarpsborg Stadion;7;0;;-2,1;3,3;0;24,70;24,70;33,20
+230;11.11.2018;Sarpsborg 08;Sandefjord;5 106;1;1;U;U;UVU;UVUVT;2;Eurosport Pluss;Sarpsborg Stadion;7;0;;7,6;5,7;25,8;24,70;24,70;33,20
+17;02.04.2018;Ranheim TF;Stabæk;2 125;4;1;V;Første kamp i sesongen;For få kamper;For få kamper;Første hjemmekamp i sesongen;Eurosport Player;EXTRA Arena;1;0;;-5,8;1,9;0;26,98;26,98;29,93
+32;15.04.2018;Ranheim TF;Haugesund;2 040;4;2;V;U;UTT;For få kamper;4;Eurosport Player;EXTRA Arena;7;0;;2,7;0,6;0;26,98;8,12;29,93
+46;25.04.2018;Ranheim TF;Brann;2 655;0;2;T;T;TVT;TVTVV;4;MAX;EXTRA Arena;3;0;;5,2;4;0,1;26,98;26,98;29,93
+147;19.08.2018;Ranheim TF;Sandefjord;1 393;1;1;U;U;UTV;UTVVV;1;Eurosport Pluss;EXTRA Arena;7;0;;11,2;6,2;4,3;26,98;25,58;29,93
+48;28.04.2018;Ranheim TF;Vålerenga;2 068;2;2;U;T;TTV;TTVTV;0;Eurosport Norge;EXTRA Arena;6;0;;3,6;0,8;0,2;26,98;25,58;26,98
+69;13.05.2018;Ranheim TF;Odd;2 013;3;1;V;U;UUT;UUTTV;2;Eurosport Player;EXTRA Arena;7;0;;8,4;1,6;0;26,98;25,58;26,98
+82;21.05.2018;Ranheim TF;Molde;2 655;3;1;V;T;TVU;TVUUT;3;Eurosport Player;EXTRA Arena;1;0;;12,6;1,7;0;26,98;25,58;26,98
+98;10.06.2018;Ranheim TF;Sarpsborg 08;2 039;2;1;V;V;VVT;VVTVU;3;Eurosport Player;EXTRA Arena;7;0;;8,5;2,1;0;26,98;25,58;26,98
+116;01.07.2018;Ranheim TF;Start;1 600;2;0;V;V;VVV;VVVVT;2;Eurosport Pluss;EXTRA Arena;7;0;;7,8;2,5;0;26,98;25,58;26,98
+128;04.08.2018;Ranheim TF;Rosenborg;2 919;1;3;T;V;VVV;VVVVV;2;Eurosport Norge;EXTRA Arena;6;0;1;14,3;0,8;8,4;26,98;25,58;26,98
+170;16.09.2018;Ranheim TF;Strømsgodset;1 582;1;1;U;V;VTU;VTUUT;1;Eurosport Pluss;EXTRA Arena;7;0;;8,9;5,2;1;26,98;26,98;26,98
+188;30.09.2018;Ranheim TF;Kristiansund BK;2 030;2;1;V;V;VUV;VUVTU;1;Eurosport Pluss;EXTRA Arena;7;0;;6,5;2,2;12,2;26,98;26,98;26,98
+205;21.10.2018;Ranheim TF;Bodø/Glimt;1 601;0;0;U;V;VVV;VVVUV;2;Eurosport Pluss;EXTRA Arena;7;0;;9,3;2;4,6;26,98;26,98;26,98
+212;28.10.2018;Ranheim TF;Lillestrøm;1 825;3;2;V;U;UUV;UUVVV;0;Eurosport Pluss;EXTRA Arena;7;0;;-2,7;1,2;0;26,98;26,98;26,98
+229;11.11.2018;Ranheim TF;Tromsø;1 729;1;2;T;V;VVU;VVUVV;3;Eurosport Pluss;EXTRA Arena;7;0;;9,9;2,1;0,4;26,98;26,98;26,98
+7;17.03.2018;Lillestrøm;Sarpsborg 08;3 842;2;2;U;V;For få kamper;For få kamper;Første hjemmekamp i sesongen;MAX;Åråsen stadion;6;0;;-9,8;0,9;0;19,34;2,93;25,97
+27;09.04.2018;Lillestrøm;Start;3 925;1;0;V;V;VUV;For få kamper;2;MAX;Åråsen stadion;1;0;;3,2;0;3,9;19,34;9,64;25,97
+42;22.04.2018;Lillestrøm;Ranheim TF;5 184;0;1;T;V;VVV;VVVUV;1;Eurosport Player;Åråsen stadion;7;0;;4,9;1,4;0;19,34;2,93;25,97
+60;06.05.2018;Lillestrøm;Sandefjord;4 715;1;0;V;V;VTV;VTVVV;0;Eurosport Player;Åråsen stadion;7;0;;8,9;2,1;0;19,34;2,93;25,97
+87;21.05.2018;Lillestrøm;Brann;6 078;1;1;U;V;VTV;VTVVT;1;Eurosport Player;Åråsen stadion;1;0;;11,8;1,3;0;19,34;2,93;25,97
+97;10.06.2018;Lillestrøm;Odd;5 060;0;0;U;V;VUV;VUVTV;1;Eurosport Norge;Åråsen stadion;7;0;;18,7;1,5;0;19,34;2,93;25,97
+119;02.07.2018;Lillestrøm;Strømsgodset;4 842;1;1;U;U;UUV;UUVUV;0;MAX;Åråsen stadion;1;0;;16,3;1,6;0;19,34;2,93;25,97
+134;05.08.2018;Lillestrøm;Molde;4 529;2;2;U;V;VUU;VUUUV;1;Eurosport Norge;Åråsen stadion;7;0;;19,5;1,1;0;19,34;2,93;25,97
+146;19.08.2018;Lillestrøm;Haugesund;4 676;1;1;U;V;VUV;VUVUU;2;Eurosport Pluss;Åråsen stadion;7;0;;13,2;1,3;0;19,34;2,93;25,97
+167;02.09.2018;Lillestrøm;Vålerenga;10 409;0;1;T;T;TUV;TUVUV;1;Eurosport Norge;Åråsen stadion;7;0;1;12,6;0;0;19,34;9,64;25,97
+183;24.09.2018;Lillestrøm;Tromsø;4 672;1;0;V;V;VTT;VTTUV;0;MAX;Åråsen stadion;1;0;;3,9;0,4;0;19,34;2,93;25,97
+187;30.09.2018;Lillestrøm;Stabæk;4 642;3;2;V;V;VVT;VVTTU;1;Eurosport Pluss;Åråsen stadion;7;0;;8,7;4,8;0;19,34;2,93;25,97
+204;21.10.2018;Lillestrøm;Rosenborg;8 526;0;0;U;U;UVV;UVVVT;3;Eurosport Pluss;Åråsen stadion;7;0;;6,5;0,7;0,7;19,34;2,93;25,97
+223;05.11.2018;Lillestrøm;Bodø/Glimt;5 510;1;1;U;V;VUU;VUUVV;0;MAX;Åråsen stadion;1;0;;6,2;3,1;0;19,34;2,93;25,97
+235;24.11.2018;Lillestrøm;Kristiansund BK;6 783;2;0;V;U;UUV;UUVUU;1;Eurosport Pluss;Åråsen stadion;6;0;;-5,7;1,5;0;19,34;2,93;25,97
+24;08.04.2018;Sandefjord;Stabæk;2 756;1;1;U;T;For få kamper;For få kamper;Første hjemmekamp i sesongen;Eurosport Player;Komplett Arena;7;0;;1,0;0,9;1,4;22,74;24,23;24,23
+29;11.04.2018;Sandefjord;Ranheim TF;2 461;1;2;T;V;For få kamper;For få kamper;1;Eurosport Norge;Komplett Arena;3;0;;3,4;2,9;0;22,74;24,23;24,23
+33;15.04.2018;Sandefjord;Kristiansund BK;2 615;3;3;U;T;TUT;For få kamper;1;Eurosport Player;Komplett Arena;7;0;;10,8;3;1,2;22,74;24,23;24,23
+49;29.04.2018;Sandefjord;Brann;4 672;0;1;T;V;VUT;VUTUT;3;Eurosport Norge;Komplett Arena;7;0;;1,7;0,3;0;22,74;24,23;24,23
+64;12.05.2018;Sandefjord;Vålerenga;3 826;0;1;T;V;VTV;VTVUT;0;MAX;Komplett Arena;6;0;;13,0;1,2;0;22,74;24,23;24,23
+83;21.05.2018;Sandefjord;Sarpsborg 08;2 850;0;1;T;V;VTU;VTUUV;0;Eurosport Player;Komplett Arena;1;0;;14,1;1,3;0;22,74;24,23;24,23
+99;10.06.2018;Sandefjord;Haugesund;2 493;0;2;T;V;VTU;VTUVU;0;Eurosport Player;Komplett Arena;7;0;;18,6;1,5;0;22,74;24,23;24,23
+114;01.07.2018;Sandefjord;Rosenborg;3 849;0;1;T;U;UTV;UTVTV;0;Eurosport Norge;Komplett Arena;7;0;;16,7;0,3;0;22,74;21,26;24,23
+136;10.08.2018;Sandefjord;Tromsø;5 319;1;0;V;U;UVT;UVTUT;0;Eurosport Norge;Komplett Arena;5;0;;18,3;1;7,1;22,74;24,23;24,23
+157;26.08.2018;Sandefjord;Lillestrøm;3 430;1;3;T;U;UVU;UVUVU;1;Eurosport Pluss;Komplett Arena;7;0;;15,2;0,7;0;22,74;24,23;24,23
+171;16.09.2018;Sandefjord;Bodø/Glimt;2 556;1;1;U;U;UTU;UTUVU;1;Eurosport Pluss;Komplett Arena;7;0;;10,1;3,5;9,3;22,74;24,23;24,23
+184;29.09.2018;Sandefjord;Odd;2 601;1;1;U;U;UUU;UUUTU;1;Eurosport Norge;Komplett Arena;6;0;;6,6;1,1;0;22,74;24,23;24,23
+201;20.10.2018;Sandefjord;Strømsgodset;2 545;2;1;V;U;UUU;UUUUU;1;Eurosport Norge;Komplett Arena;6;0;;7,5;1,6;0;22,74;24,23;24,23
+220;04.11.2018;Sandefjord;Start;2 505;4;1;V;V;VVU;VVUUU;2;Eurosport Pluss;Komplett Arena;7;0;;9,9;5,4;0;22,74;24,23;24,23
+236;24.11.2018;Sandefjord;Molde;2 564;1;3;T;U;UVV;UVVVU;4;Eurosport Pluss;Komplett Arena;6;0;;-3,4;1,6;0;22,74;24,23;24,23
+203;21.10.2018;Haugesund;Odd;3 931;2;0;V;T;TVV;TVVTV;1;Eurosport Pluss;Haugesund Stadion;7;0;;11,5;2,9;0;26,59;18,72;19,73
+234;24.11.2018;Haugesund;Start;3 841;3;1;V;V;VVV;VVVVT;2;Eurosport Pluss;Haugesund Stadion;6;0;;-3,4;1,1;0;26,59;18,72;19,73
+8;17.03.2018;Rosenborg;Kristiansund BK;14 285;2;2;U;T;For få kamper;For få kamper;Første hjemmekamp i sesongen;Eurosport Norge;Lerkendal Stadion;6;0;;-9,1;2;0;14,24;14,24;17,19
+26;08.04.2018;Rosenborg;Molde;16 154;4;0;V;V;VTV;For få kamper;2;TVNorge;Lerkendal Stadion;7;0;;0,9;0,9;0,6;14,24;5,46;17,19
+39;22.04.2018;Rosenborg;Start;15 594;2;0;V;T;TVT;For få kamper;4;Eurosport Norge;Lerkendal Stadion;7;0;;4,1;2,7;0,2;14,24;13,60;17,19
+137;12.08.2018;Rosenborg;Stabæk;14 046;1;1;U;T;TVV;TVVVU;2;MAX;Lerkendal Stadion;7;0;;9,0;2,1;0,8;14,24;8,41;17,19
+153;26.08.2018;Rosenborg;Strømsgodset;16 519;4;3;V;U;UUV;UUVTU;1;MAX;Lerkendal Stadion;7;0;;8,9;1,2;0,6;14,24;13,60;17,19
+56;05.05.2018;Rosenborg;Ranheim TF;21 201;1;1;U;U;UTT;UTTVT;2;Eurosport Norge;Lerkendal Stadion;6;0;;8,6;0,8;1,8;14,24;8,41;14,24
+72;16.05.2018;Rosenborg;Lillestrøm;21 045;3;0;V;T;TVV;TVVTV;1;TVNorge;Lerkendal Stadion;3;1;;10,1;0,8;2;14,24;8,41;14,24
+94;27.05.2018;Rosenborg;Brann;19 806;1;2;T;T;TVT;TVTUT;3;TVNorge;Lerkendal Stadion;7;0;;5,1;1,3;0;14,24;13,60;14,24
+110;24.06.2018;Rosenborg;Vålerenga;16 249;3;0;V;V;VTT;VTTVT;1;Eurosport Norge;Lerkendal Stadion;7;0;;9,1;1,8;0,2;14,24;13,60;14,24
+120;07.07.2018;Rosenborg;Tromsø;15 384;2;1;V;V;VTV;VTVVV;3;Eurosport Norge;Lerkendal Stadion;6;0;;10,5;1,4;1;14,24;13,60;14,24
+166;02.09.2018;Rosenborg;Haugesund;15 427;1;0;V;V;VUV;VUVTV;4;Eurosport Pluss;Lerkendal Stadion;7;0;;11,1;1,1;0,2;14,24;14,24;14,24
+182;23.09.2018;Rosenborg;Sarpsborg 08;13 668;3;1;V;T;TVT;TVTVV;1;Eurosport Norge;Lerkendal Stadion;7;0;;7,6;3,1;13;14,24;14,24;14,24
+194;07.10.2018;Rosenborg;Sandefjord;13 908;1;1;U;U;UUU;UUUUT;3;Eurosport Norge;Lerkendal Stadion;7;0;;0,5;1,6;0,8;14,24;14,24;14,24
+219;04.11.2018;Rosenborg;Odd;13 983;3;1;V;V;VVV;VVVUV;1;Eurosport Pluss;Lerkendal Stadion;7;0;;6,7;2,2;2;14,24;14,24;14,24
+233;24.11.2018;Rosenborg;Bodø/Glimt;19 086;1;1;U;U;UUU;UUUUT;3;TVNorge;Lerkendal Stadion;6;0;;-1,3;1,2;0;14,24;14,24;14,24
+3;11.03.2018;Odd;Haugesund;4 400;1;2;T;Første kamp i sesongen;For få kamper;For få kamper;Første hjemmekamp i sesongen;Eurosport Player;Skagerak Arena;7;0;;-2,4;1,4;0;13,12;9,10;11,95
+19;02.04.2018;Odd;Rosenborg;5 497;1;1;U;V;For få kamper;For få kamper;1;Eurosport Norge;Skagerak Arena;1;0;;-6,8;1,3;0;13,12;9,10;11,95
+23;08.04.2018;Odd;Bodø/Glimt;4 859;1;0;V;U;UVT;For få kamper;1;Eurosport Player;Skagerak Arena;7;0;;-1,4;0;0,2;13,12;2,20;11,95
+45;23.04.2018;Odd;Sarpsborg 08;4 861;3;1;V;T;TUV;TUVUV;1;MAX;Skagerak Arena;1;0;;4,0;1,8;6,2;13,12;9,10;11,95
+61;06.05.2018;Odd;Start;6 530;3;0;V;T;TVV;TVVVU;3;Eurosport Player;Skagerak Arena;7;0;;5,4;0,5;0;13,12;9,10;11,95
+77;16.05.2018;Odd;Sandefjord;6 122;5;0;V;T;TVT;TVTVU;3;Eurosport Player;Skagerak Arena;3;1;;7,7;0,9;0;13,12;2,20;11,95
+92;27.05.2018;Odd;Kristiansund BK;5 196;1;2;T;V;VVV;VVVVT;5;Eurosport Player;Skagerak Arena;7;0;;9,8;0,2;0;13,12;9,10;11,95
+111;25.06.2018;Odd;Brann;6 761;0;1;T;U;UTV;UTVVV;1;MAX;Skagerak Arena;1;0;;13,4;0;0;13,12;9,10;11,95
+123;08.07.2018;Odd;Lillestrøm;5 421;3;1;V;U;UUU;UUUVU;0;Eurosport Pluss;Skagerak Arena;7;0;;9,7;0,6;0;13,12;2,20;11,95
+142;12.08.2018;Odd;Strømsgodset;5 163;2;2;U;U;UVV;UVVTU;3;Eurosport Norge;Skagerak Arena;7;0;;7,6;0,3;0,1;13,12;9,10;11,95
+162;02.09.2018;Odd;Molde;5 289;1;1;U;T;TUU;TUUUV;2;Eurosport Norge;Skagerak Arena;7;0;;7,2;0,3;0;13,12;2,20;11,95
+176;22.09.2018;Odd;Vålerenga;6 053;3;2;V;T;TUT;TUTUU;1;Eurosport Norge;Skagerak Arena;6;0;;9,1;0,8;0,6;13,12;9,10;11,95
+197;07.10.2018;Odd;Ranheim TF;4 762;2;0;V;V;VVU;VVUVT;3;Eurosport Pluss;Skagerak Arena;7;0;;5,9;1,1;0;13,12;9,10;11,95
+209;28.10.2018;Odd;Tromsø;4 943;1;0;V;V;VVU;VVUVT;2;Eurosport Norge;Skagerak Arena;7;0;;-1,0;4;0;13,12;9,10;11,95
+228;11.11.2018;Odd;Stabæk;4 823;0;3;T;T;TUT;TUTUV;1;Eurosport Pluss;Skagerak Arena;7;0;;8,7;1;56,7;13,12;9,10;11,95
+34;15.04.2018;Stabæk;Tromsø;3 564;1;1;U;U;UVU;For få kamper;Første hjemmekamp i sesongen;Eurosport Player;Nadderud Stadion;7;0;;9,3;1,3;0;20,03;15,52;11,51
+47;25.04.2018;Stabæk;Start;3 043;1;1;U;V;VUU;VUUVU;1;Eurosport Norge;Nadderud Stadion;3;0;;8,0;2,1;0;20,03;15,52;11,51
+55;30.04.2018;Stabæk;Lillestrøm;3 210;3;2;V;T;TVV;TVVVU;1;MAX;Nadderud Stadion;1;0;;6,9;2,1;0;20,03;15,52;11,51
+71;13.05.2018;Stabæk;Rosenborg;4 561;0;1;T;V;VVU;VVUVU;3;Eurosport Norge;Nadderud Stadion;7;0;;11,2;1,7;0;20,03;15,52;11,51
+84;21.05.2018;Stabæk;Odd;3 380;2;1;V;V;VTV;VTVVU;0;Eurosport Player;Nadderud Stadion;1;0;;13,3;0,6;0;20,03;15,52;11,51
+100;10.06.2018;Stabæk;Bodø/Glimt;3 510;0;0;U;V;VVV;VVVTV;2;Eurosport Player;Nadderud Stadion;7;0;;19,1;2,1;0;20,03;15,52;11,51
+118;01.07.2018;Stabæk;Haugesund;3 035;2;1;V;U;UTV;UTVTU;0;Eurosport Norge;Nadderud Stadion;7;0;;16,9;2,4;0;20,03;15,52;11,51
+131;05.08.2018;Stabæk;Sarpsborg 08;3 352;1;3;T;V;VUT;VUTVV;2;Eurosport Pluss;Nadderud Stadion;7;0;;20,9;1,1;0;20,03;15,52;11,51
+148;19.08.2018;Stabæk;Molde;4 501;3;1;V;U;UTV;UTVVV;1;Eurosport Pluss;Nadderud Stadion;7;0;;14,9;4;0;20,03;15,52;11,51
+161;01.09.2018;Stabæk;Sandefjord;3 055;3;3;U;T;TUV;TUVUV;3;Eurosport Norge;Nadderud Stadion;6;0;;11,2;1,9;0;20,03;15,52;11,51
+177;23.09.2018;Stabæk;Ranheim TF;3 161;3;2;V;U;UVT;UVTUU;3;Eurosport Norge;Nadderud Stadion;7;0;;9,9;0,6;0;20,03;15,52;11,51
+192;06.10.2018;Stabæk;Vålerenga;4 021;1;1;U;V;VVU;VVUUV;3;MAX;Nadderud Stadion;6;0;1;7,6;2,5;0;20,03;15,52;11,51
+207;21.10.2018;Stabæk;Brann;4 031;1;2;T;U;UVV;UVVUU;1;Eurosport Norge;Nadderud Stadion;7;0;;8,2;0,5;1,2;20,03;15,52;11,51
+216;03.11.2018;Stabæk;Kristiansund BK;3 471;0;1;T;U;UTU;UTUVV;1;Eurosport Norge;Nadderud Stadion;6;0;;5,8;0,5;0,4;20,03;15,52;11,51
+237;24.11.2018;Stabæk;Strømsgodset;4 938;2;2;U;T;TTU;TTUTU;0;Eurosport Pluss;Nadderud Stadion;6;0;;-5,5;1,5;0;20,03;15,52;11,51
+9;18.03.2018;Brann;Bodø/Glimt;8 447;2;0;V;V;For få kamper;For få kamper;Første hjemmekamp i sesongen;MAX;Brann Stadion;7;0;;-7,8;0,8;0;12,18;16,85;10,85
+21;08.04.2018;Brann;Kristiansund BK;8 173;1;0;V;V;VUT;For få kamper;2;Eurosport Norge;Brann Stadion;7;0;;4,8;0,8;1,8;12,18;16,85;10,85
+38;21.04.2018;Brann;Stabæk;9 478;3;0;V;U;UUV;For få kamper;1;Eurosport Norge;Brann Stadion;6;0;;7,7;2,4;1,8;12,18;16,85;10,85
+62;06.05.2018;Brann;Tromsø;9 755;3;0;V;U;UVU;UVUVV;3;Eurosport Norge;Brann Stadion;7;0;;9,7;7;1;12,18;16,85;10,85
+74;16.05.2018;Brann;Haugesund;12 914;1;1;U;V;VUT;VUTVV;3;Eurosport 1;Brann Stadion;3;1;;10,4;4,2;0,3;12,18;16,85;10,85
+102;10.06.2018;Brann;Vålerenga;12 004;0;0;U;T;TUU;TUUTV;1;TVNorge;Brann Stadion;7;0;;13,9;1,5;0;12,18;16,85;10,85
+113;01.07.2018;Brann;Molde;11 371;0;4;T;V;VVV;VVVVV;0;MAX;Brann Stadion;7;0;;9,3;1,2;0;12,18;16,85;10,85
+135;06.08.2018;Brann;Start;9 865;4;1;V;V;VVV;VVVUV;0;MAX;Brann Stadion;1;0;;11,4;2;1,9;12,18;16,85;10,85
+145;19.08.2018;Brann;Sarpsborg 08;11 103;2;0;V;V;VTV;VTVUT;4;Eurosport Norge;Brann Stadion;7;0;;12,3;2,7;15,3;12,18;16,85;10,85
+164;02.09.2018;Brann;Ranheim TF;9 764;1;0;V;T;TUU;TUUTV;2;Eurosport Pluss;Brann Stadion;7;0;;15,0;6,3;0;12,18;16,85;10,85
+179;23.09.2018;Brann;Sandefjord;10 832;1;1;U;U;UUT;UUTUV;1;Eurosport Pluss;Brann Stadion;7;0;;7,9;4,9;16,9;12,18;16,85;10,85
+199;07.10.2018;Brann;Lillestrøm;9 282;1;1;U;V;VVV;VVVTT;1;Eurosport Norge;Brann Stadion;7;0;;2,4;1,4;3;12,18;16,85;10,85
+214;28.10.2018;Brann;Rosenborg;12 914;1;2;T;U;UUV;UUVVT;1;TVNorge;Brann Stadion;7;0;;-2,1;1,7;0;12,18;16,85;10,85
+222;04.11.2018;Brann;Strømsgodset;8 887;3;1;V;V;VVT;VVTTT;1;Eurosport Norge;Brann Stadion;7;0;;11,1;12,1;5,7;12,18;16,85;10,85
+232;24.11.2018;Brann;Odd;11 677;1;0;V;T;TVV;TVVVV;3;MAX;Brann Stadion;6;0;;0,2;0,8;0;12,18;16,85;10,85
+54;29.04.2018;Strømsgodset;Rosenborg;7 587;0;1;T;V;VVV;VVVTU;3;Eurosport Norge;Marienlyst stadion;7;0;;1,7;0,1;0;8,91;8,91;8,91
+66;13.05.2018;Strømsgodset;Sarpsborg 08;5 875;1;2;T;U;UUV;UUVTU;0;Eurosport Norge;Marienlyst stadion;7;0;;5,2;0,1;0;8,91;8,91;8,91
+93;27.05.2018;Strømsgodset;Sandefjord;6 110;2;0;V;T;TVT;TVTVT;1;Eurosport Player;Marienlyst stadion;7;0;;13,4;0,4;0;8,91;8,91;8,91
+109;24.06.2018;Strømsgodset;Ranheim TF;5 431;3;0;V;V;VVV;VVVTV;2;Eurosport Player;Marienlyst stadion;7;0;;10,1;0,3;0;8,91;8,91;8,91
+127;09.07.2018;Strømsgodset;Kristiansund BK;5 496;2;3;T;U;UVV;UVVTV;3;MAX;Marienlyst stadion;1;0;;15,4;0,2;1;8,91;8,91;8,91
+129;05.08.2018;Strømsgodset;Bodø/Glimt;5 433;4;0;V;U;UUU;UUUUV;2;Eurosport Norge;Marienlyst stadion;7;0;;17,2;0,1;0;8,91;8,91;8,91
+149;19.08.2018;Strømsgodset;Start;5 922;1;1;U;U;UVV;UVVVV;4;Eurosport Pluss;Marienlyst stadion;7;0;;12,2;1,3;0;8,91;8,91;8,91
+160;01.09.2018;Strømsgodset;Tromsø;5 463;2;4;T;T;TVV;TVVTV;1;MAX;Marienlyst stadion;6;0;;6,9;0,2;0,2;8,91;8,91;8,91
+181;23.09.2018;Strømsgodset;Molde;7 084;1;2;T;V;VUT;VUTVV;2;Eurosport Pluss;Marienlyst stadion;7;0;;8,3;0,5;0;8,91;8,91;8,91
+193;06.10.2018;Strømsgodset;Haugesund;5 477;0;1;T;V;VVT;VVTVV;1;Eurosport Norge;Marienlyst stadion;6;0;;0,7;0,5;0;8,91;8,91;8,91
+208;27.10.2018;Strømsgodset;Vålerenga;6 855;2;0;V;V;VTT;VTTTU;0;Eurosport Norge;Marienlyst stadion;6;0;;0,4;0,5;0;8,91;8,91;8,91
+30;14.04.2018;Start;Vålerenga;5 007;1;6;T;V;VTV;For få kamper;1;Eurosport Norge;Sparebanken Sør Arena;6;0;;8,3;2,9;0;50,53;50,53;7,83
+52;29.04.2018;Start;Haugesund;4 159;0;1;T;V;VVU;VVUTT;1;Eurosport Player;Sparebanken Sør Arena;7;0;;3,9;0,8;0;50,53;50,53;7,83
+65;12.05.2018;Start;Brann;4 859;0;1;T;V;VTU;VTUVT;0;Eurosport Norge;Sparebanken Sør Arena;6;0;;8,8;1,2;0;50,53;50,53;7,83
+85;21.05.2018;Start;Bodø/Glimt;3 500;1;0;V;T;TTU;TTUUU;0;Eurosport Player;Sparebanken Sør Arena;1;0;;10,4;2,7;0;50,53;7,43;7,83
+4;11.03.2018;Start;Tromsø;3 068;4;1;V;Første kamp i sesongen;For få kamper;For få kamper;Første hjemmekamp i sesongen;Eurosport Player;Sparebanken Sør Arena;7;0;;0,9;3;0,1;50,53;50,53;7,66
+18;02.04.2018;Start;Sandefjord;4 716;1;4;T;V;For få kamper;For få kamper;4;Eurosport Player;Sparebanken Sør Arena;1;0;;-3,1;2,6;0,1;50,53;7,43;7,66
+101;10.06.2018;Start;Strømsgodset;4 602;1;1;U;V;VVV;VVVTV;1;Eurosport Player;Sparebanken Sør Arena;7;0;;16,4;1,1;4,9;50,53;50,53;7,66
+108;24.06.2018;Start;Kristiansund BK;4 010;2;0;V;U;UVV;UVVVT;1;Eurosport Player;Sparebanken Sør Arena;7;0;;15,0;1,6;0;50,53;50,53;7,66
+125;08.07.2018;Start;Stabæk;4 282;2;1;V;V;VVU;VVUVV;2;Eurosport Pluss;Sparebanken Sør Arena;7;0;;14,1;2;0;50,53;7,43;7,66
+138;12.08.2018;Start;Ranheim TF;3 714;0;0;U;T;TVV;TVVVV;2;Eurosport Norge;Sparebanken Sør Arena;7;0;;12,3;4,3;0;50,53;50,53;7,66
+159;27.08.2018;Start;Odd;3 494;0;1;T;U;UUU;UUUVV;0;MAX;Sparebanken Sør Arena;1;0;;11,5;0,3;31,8;50,53;18,25;7,66
+169;16.09.2018;Start;Lillestrøm;10 419;3;0;V;T;TTU;TTUVU;0;Eurosport Norge;Sparebanken Sør Arena;7;0;;6,7;0,4;0;50,53;50,53;7,66
+198;07.10.2018;Start;Sarpsborg 08;3 837;1;0;V;T;TVT;TVTVT;3;Eurosport Pluss;Sparebanken Sør Arena;7;0;;6,2;1;0,1;50,53;50,53;7,66
+215;29.10.2018;Start;Molde;6 425;1;3;T;T;TVV;TVVTV;1;MAX;Sparebanken Sør Arena;1;0;;-1,3;1,4;0;50,53;50,53;7,66
+225;11.11.2018;Start;Rosenborg;5 481;0;1;T;V;VTT;VTTVV;1;TVNorge;Sparebanken Sør Arena;7;0;;9,4;3,9;17,9;50,53;50,53;7,43
+10;18.03.2018;Haugesund;Molde;3 820;0;1;T;T;For få kamper;For få kamper;Første hjemmekamp i sesongen;Eurosport Player;Haugesund Stadion;7;0;;-7,3;1;0;26,59;18,72;5,47
+22;08.04.2018;Haugesund;Sarpsborg 08;3 474;1;1;U;T;TTT;For få kamper;0;Eurosport Player;Haugesund Stadion;7;0;;5,3;0,5;4,4;26,59;18,72;5,47
+40;22.04.2018;Haugesund;Strømsgodset;3 690;1;0;V;V;VUT;VUTTT;1;Eurosport Player;Haugesund Stadion;7;0;;3,2;0,6;0,1;26,59;18,72;5,47
+67;13.05.2018;Haugesund;Kristiansund BK;4 063;3;2;V;U;UTV;UTVVU;1;Eurosport Player;Haugesund Stadion;7;0;;6,3;0,3;0;26,59;18,72;5,47
+80;21.05.2018;Haugesund;Rosenborg;6 502;1;2;T;U;UVU;UVUTV;3;Eurosport Norge;Haugesund Stadion;1;0;;11,4;0,5;0;26,59;18,72;5,47
+91;27.05.2018;Haugesund;Tromsø;4 192;1;0;V;T;TUV;TUVUT;1;Eurosport Player;Haugesund Stadion;7;0;;10,3;0,2;0;26,59;18,72;5,47
+107;24.06.2018;Haugesund;Lillestrøm;4 311;2;2;U;U;UVU;UVUVT;1;Eurosport Player;Haugesund Stadion;7;0;;10,5;0,7;0;26,59;18,72;5,47
+122;08.07.2018;Haugesund;Sandefjord;3 504;4;2;V;V;VUT;VUTVT;2;Eurosport Pluss;Haugesund Stadion;7;0;;9,7;3,2;0,1;26,59;18,72;5,47
+143;13.08.2018;Haugesund;Vålerenga;4 083;1;0;V;T;TVV;TVVUT;4;MAX;Haugesund Stadion;1;0;;10,4;1,9;0;26,59;18,72;5,47
+155;26.08.2018;Haugesund;Stabæk;3 822;2;0;V;U;UVT;UVTVV;1;Eurosport Pluss;Haugesund Stadion;7;0;;8,0;1,7;3,2;26,59;18,72;5,47
+168;15.09.2018;Haugesund;Brann;7 523;1;3;T;V;VVU;VVUVT;2;Eurosport Norge;Haugesund Stadion;6;0;;7,9;1,7;5,5;26,59;18,72;5,47
+186;30.09.2018;Haugesund;Bodø/Glimt;4 563;1;0;V;V;VTV;VTVVU;1;Eurosport Pluss;Haugesund Stadion;7;0;;9,8;3,9;0;26,59;18,72;5,30
+218;04.11.2018;Haugesund;Ranheim TF;3 430;2;0;V;V;VVT;VVTVV;2;Eurosport Pluss;Haugesund Stadion;7;0;;10,6;8;2,3;26,59;18,72;5,30
+11;18.03.2018;Vålerenga;Odd;6 063;2;1;V;T;For få kamper;For få kamper;Første hjemmekamp i sesongen;Eurosport Norge;Intility Arena;7;0;;-12,5;2,5;0,1;4,91;0,63;4,91
+20;07.04.2018;Vålerenga;Strømsgodset;9 304;1;4;T;U;For få kamper;For få kamper;2;Eurosport Norge;Intility Arena;6;0;1;0,5;1,2;0;4,91;0,63;4,91
+44;22.04.2018;Vålerenga;Molde;8 436;0;0;U;V;VVV;VVVTV;1;Eurosport Norge;Intility Arena;7;0;;2,8;1,9;0;4,91;0,63;4,91
+57;06.05.2018;Vålerenga;Haugesund;7 708;2;2;U;T;TVV;TVVUT;0;Eurosport Norge;Intility Arena;7;0;;8,4;2,3;0;4,91;0,63;4,91
+79;16.05.2018;Vålerenga;Stabæk;11 124;1;0;V;T;TVV;TVVUV;2;Eurosport Player;Intility Arena;3;1;1;13,0;2,4;0;4,91;0,63;4,91
+88;26.05.2018;Vålerenga;Lillestrøm;13 527;1;0;V;U;UVT;UVTVV;1;Eurosport Norge;Intility Arena;6;0;1;15,1;2;0;4,91;0,63;4,91
+112;30.06.2018;Vålerenga;Bodø/Glimt;7 872;2;2;U;U;UUV;UUVVT;1;Eurosport Norge;Intility Arena;6;0;;12,9;5,4;0;4,91;0,63;4,91
+133;05.08.2018;Vålerenga;Sandefjord;7 008;2;2;U;V;VTU;VTUTV;2;Eurosport Pluss;Intility Arena;7;0;;17,9;0,7;0;4,91;0,63;4,91
+150;19.08.2018;Vålerenga;Tromsø;8 254;3;0;V;V;VTV;VTVVT;2;Eurosport Norge;Intility Arena;7;0;;11,3;2,4;0;4,91;0,63;4,91
+158;26.08.2018;Vålerenga;Brann;11 759;2;0;V;V;VVV;VVVUT;3;TVNorge;Intility Arena;7;0;;8,4;2,6;3,6;4,91;0,63;4,91
+174;16.09.2018;Vålerenga;Rosenborg;14 740;2;3;T;V;VVT;VVTUT;2;TVNorge;Intility Arena;7;0;;7,4;2,9;3,7;4,91;0,63;4,91
+185;30.09.2018;Vålerenga;Start;8 200;3;2;V;T;TVU;TVUTU;2;Eurosport Norge;Intility Arena;7;0;;8,0;4,6;0;4,91;0,63;4,91
+202;21.10.2018;Vålerenga;Kristiansund BK;7 927;0;2;T;V;VVV;VVVVU;3;Eurosport Norge;Intility Arena;7;0;;7,0;0,7;0;4,91;0,63;4,91
+221;04.11.2018;Vålerenga;Sarpsborg 08;7 918;0;0;U;V;VUV;VUVTV;0;Eurosport Pluss;Intility Arena;7;0;;8,4;5,9;0,2;4,91;0,63;2,66
+239;24.11.2018;Vålerenga;Ranheim TF;7 860;2;1;V;T;TVV;TVVUV;0;Eurosport Pluss;Intility Arena;6;0;;-7,0;3,8;0;4,91;0,63;2,66
+0;11.03.2018;Strømsgodset;Stabæk;5 199;2;2;U;Første kamp i sesongen;For få kamper;For få kamper;Første hjemmekamp i sesongen;Eurosport Norge;Marienlyst stadion;7;0;;-4,5;0,8;0,9;8,91;8,91;1,45
+12;02.04.2018;Strømsgodset;Brann;5 873;1;1;U;U;For få kamper;For få kamper;2;MAX;Marienlyst stadion;1;0;;-2,6;1,5;0;8,91;8,91;1,45
+35;15.04.2018;Strømsgodset;Odd;5 588;3;0;V;V;VUV;For få kamper;1;Eurosport Player;Marienlyst stadion;7;0;;3,0;0,5;0;8,91;8,91;1,45
+231;11.11.2018;Strømsgodset;Lillestrøm;5 695;2;2;U;U;UVU;UVUUV;2;Eurosport Pluss;Marienlyst stadion;7;0;;8,7;3,4;14,9;8,91;8,91;1,45

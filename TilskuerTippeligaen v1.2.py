@@ -20,7 +20,7 @@ class Fotballag:
     instances = []  # Lager en liste over alle instances
                     # i Fotballag-klassen.
     """En klasse med informasjon om eliteserielagene"""
-    def __init__(self, name, stadium,location1):
+    def __init__(self, name, stadium, location1, wsta=None):
         self.name = name
         self.stadium = stadium
         self.location1 = location1
@@ -458,80 +458,93 @@ def closest_wsta(coord):
             continue
     return closest
 
-# Finner nærmeste værstasjon for alle lag i Fotballag.instances
+Fotballag.instances[10].wsta
+Fotballag.instances[0].stadium
+Fotballag.instances[0].wsta
+
+
+# Finner de nest nærmeste værstasjone for alle lag i Fotballag.instances, basert på hvor den nærmeste værstasjonen er
+    # Lager først en funksjon for å gjøre dette
+def closest_wsta(coord, additional_wsta = 5):
+    next_wstas = []
+    client_id = '0bc47091-15bd-4a22-93d6-9f262a1e91a2'
+    endpoint = 'https://frost.met.no/sources/v0.jsonld?types=SensorSystem&geometry=nearest(POINT({lon}%{lat}))&nearestmaxcount={additional_wsta}'.format(
+        lon = coord[0],
+        lat = coord[1],
+        additional_wsta = additional_wsta
+    )
+    r = requests.get(endpoint, auth=(client_id, ''))
+    json = r.json()
+    for station in json['data']:
+        next_wstas.append(station['id'])
+
+    # Finner de fem neste værstasjonene for alle lag
+
+
+
+
+
+# Finner de fire neste nærmeste værstasjonene basert på den første
 for team in Fotballag.instances:
     try:
         coord = team.stadium['Coord']
         team.wsta = closest_wsta(coord)
+        print('Fant koordinatene til ' + team.name)
     except:
         print('Problemer med {team}'.format(team=team))
 
-Fotballag.instances[0].stadium['Coord']
 
 #-------------------------------------------------#
-# Finner temperatur den aktuelle dagen
-
-
-#-------------------------------------------------#
-#-------------------------------------------------#
-
-# må hente data om værforhold på kampdag
+# Finner temperatur, nedbør og vindstyrke den aktuelle dagen
 temperatur = []
-windData = []
 wind = []
-downfallData = []
-downfall = []
-# begynner med å finne linken der værdataene ligger
-for dato in vikingDatoerHjemme:
-    page = requests.get('https://www.yr.no/sted/Norge/Rogaland/Stavanger/Gausel~15360/almanakk.html?dato=%s-%s-%s' % (dato[6:], dato[3:5], dato[:2]))
-    soup = BeautifulSoup(page.content, 'html.parser')
-    print('Henter værdata for kamp ' + str(vikingDatoerHjemme.index(dato)+1))
-    # henter inn data om temperatur. Bruker 'Middel-temperatur'.
-    try:
-        temperatur.append(((soup.find(text=re.compile('Middel'))).nextSibling).text)
-    except AttributeError:
-        print('Problemer med å hente ut info om temperatur. NoneType object has no attribute nextSibling')
-        temperatur.append('N/A')
-    # henter inn data om vind. Bruker vinden målt kl. 14
-    try:
-        windData.append((((soup.find(text=re.compile('kl 14'))).parent.parent.parent).text))
-        elemWind = re.search(('\s\d+,?\d*\sm/s'), windData[-1])
-        elemWind = (elemWind.group())[1:]       # fjerner mellomrommet i begynnelsen av stringen
-        wind.append(elemWind)
-    except AttributeError:
-        print("Problemer med å hente ut målt vind for kamp " + str(vikingDatoerHjemme.index(dato)+1))
-        wind.append('N/A')
-    # henter inn data om nedbør
-    try:
-        downfallData = ((soup.find(class_='all-day-values')).text)
-        elemDownfall = re.search('.?\d+.?\d*\smm', downfallData)
-        if elemDownfall.group() == '-1 mm':
-            page = requests.get('https://www.yr.no/sted/Norge/Rogaland/Stavanger/Stavanger_(Våland)_målestasjon/almanakk.html?dato=%s-%s-%s' % (dato[6:], dato[3:5], dato[:2]))
-            soup = BeautifulSoup(page.content, 'html.parser')
-            downfallData = ((soup.find(class_='all-day-values')).text)
-            elemDownfall = re.search('.?\d+.?\d*\smm', downfallData)
-            print('Fant data om nedbør fra Våland istedenfor Sola.')
-            if (elemDownfall.group())[0] == '-':
-                page = requests.get(
-                    'https://www.yr.no/sted/Norge/Rogaland/Klepp/Særheim_målestasjon/almanakk.html?dato=%s-%s-%s' % (
-                    dato[6:], dato[3:5], dato[:2]))
-                soup = BeautifulSoup(page.content, 'html.parser')
-                downfallData = ((soup.find(class_='all-day-values')).text)
-                elemDownfall = re.search('.?\d+.?\d*\smm', downfallData)
-                print('Fant data om nedbør fra Klepp istedenfor Sola.')
-        elemDownfall = (elemDownfall.group(0))
-        downfall.append(elemDownfall)
-    except:
-        print('Problemer med å hente ut målt nedbør for kamp ' + str(vikingDatoerHjemme.index(dato)+1))
-        downfall.append('N/A')
+team.name
+for i in range(len(dfSesong.index)):      # for i in range(len(dfSesong.index)): (den linjen som egentlig skal være her)
+    print('Vær for kamp ' + str(i+1) + '...')
+    hour=15 # Klokkeslett (Time)
+    tempObs = '' # Lager tempObs-variabelen slik at det lett kan sjekkes om temperatur har blitt funnet for hver kamp
+    windObs = '' # Lager windObs-variabelen slik at det lett kan sjekkes om vind har blitt funnet for hver kamp
+    for team in Fotballag.instances:
+        if dfSesong.iloc[i,1] == team.name:
+            client_id = '0bc47091-15bd-4a22-93d6-9f262a1e91a2'
+            endpoint = 'https://frost.met.no/observations/v0.jsonld?sources={wsta}&referencetime={year}-{month}-{day}&elements=air_temperature%2Cwind_speed%2Cprecipitation_amount'.format(
+                wsta=team.wsta,
+                year=dfSesong.iloc[i,0][-4:],
+                month=dfSesong.iloc[i,0][3:5],
+                day=dfSesong.iloc[i,0][0:2],
+                hour=hour)
+            r = requests.get(endpoint,auth=(client_id,''))
+            json = r.json()
+            try:
+                for key in json['data'][0]['observations']:
+                    for value in (key.values()):
+                        if not tempObs:
+                            if value == 'air_temperature':
+                                tempObs = list(key.values())[list(key.values()).index('air_temperature') + 1]
+                                temperatur.append(tempObs)
+                                print('Fant temperatur for kamp ' + str(i))
+            except:
+                continue
+            try:
+                for key in json['data'][0]['observations']:
+                    for value in (key.values()):
+                        if not windObs:
+                            if value == 'wind_speed':
+                                windObs = list(key.values())[list(key.values()).index('wind_speed') + 1]
+                                wind.append(windObs)
+                                print('Fant vind for kamp ' + str(i))
+            except:
+                continue
+    if not tempObs:
+        temperatur.append('-')
+    if not windObs:
+        wind.append('-')
 
 
-
-# Lager et nytt datasett med været inkludert
-dfHjemmekamper['Temperatur'] = temperatur
-dfHjemmekamper['Vindstyrke'] = wind
-dfHjemmekamper['Nedbør'] = downfall
-
+# Legger data over vind og temperatur til dfSesong
+dfSesong['Temp'] = temperatur
+dfSesong['Vind'] = wind
+#-------------------------------------------------#
 
 # Lager en funksjon for enkel lagring
 
@@ -540,12 +553,9 @@ def to_csv(dataframe, filnavn):
     print('Lagret til CSV-fil i path.')
     return
 
-to_csv(dfSesong, 'vikingkamper_10_17(1)')
-to_csv(dfHjemmekamper, 'viking_hjemmekamper_10_17(1)')
 
 # for å se antall av en verdi i en dataframe:
 # dfSesong['Ukedag'].value_counts()
 # print ut hele dataframen:
 print(dfSesong.to_string())
-print(dfHjemmekamper.to_string())
 # dfHjemmekamper['Nedbør'].value_counts()

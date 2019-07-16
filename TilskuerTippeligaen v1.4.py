@@ -1,32 +1,30 @@
 
 import os
-import time
 from bs4 import BeautifulSoup
 import requests
 import pandas
-import time
 import re
-import itertools
 from datetime import datetime
 import numpy
-from geopy.distance import geodesic
+import time
 
 
 # Ber om input for å se informasjon fra sesong 2001 til 2017.
 fraSesong = int(input('Hva er det første sesongen du vil se informasjon fra? Velg fra 2001 til 2018: '))
 
+tot_start = time.time()
 # Lager en klasse med objekter for å lagre informasjon om hvert lag
 class Fotballag:
     instances = []  # Lager en liste over alle instances
                     # i Fotballag-klassen.
     """En klasse med informasjon om eliteserielagene"""
-    def __init__(self, name, stadium, location1, wsta=None):
+    def __init__(self, name, stadium, location1):
         self.name = name
         self.stadium = stadium
         self.location1 = location1
         self.derbylag = []
         self.rivallag = []
-        self.wsta = wsta
+        self.wsta = []
         self.instances.append(self)     # Appender hver instance som initieres i fotballagklassen.
                                         # Vær obs på at det er __repr__ som appendes, men dette har ikke noe å si
                                         # når målet er å tråle gjennom (iterate) gjennom listen
@@ -219,10 +217,11 @@ for url in urlSesonger:
 klokkeslett = []
 urlKode_01_07 = [323,324,325,326,327,328,329]
 stadium_list = []
+start_tilskuertall = time.time()
 for url in urlKamper:
     page1 = requests.get(url)
     soup = BeautifulSoup(page1.content, "html.parser")
-    print("Henter inn data om tilskuertall for kamp "+ str(urlKamper.index(url)+1) +" ...")
+    print("Henter inn data om tilskuertall for kamp "+ str(urlKamper.index(url)+1) +"/" + str(len(urlKamper))  +" ...")
     tilskuertallUordnet = soup.find_all(text=re.compile('Tilskuere'), limit=1)
     arena = soup.find_all(class_='sd_game_home')
     stadium_list.append(re.search('.*\\t(.*)Tilskuere:', arena[1].text).group(1))
@@ -236,6 +235,8 @@ for url in urlKamper:
             klokkeslett.append(tidspunkt)
     except AttributeError:
         continue
+
+time_tilskuertall = round(time.time() - start_tilskuertall,2)
 
 # Lager en liste som bruker klokkeslett til å lage en liste med TV-kamper og ikke-TVkamper
 tv_kanal_01_07 = []
@@ -390,7 +391,7 @@ for team in Fotballag.instances: # Iterater gjennom alle fotballagene jeg har la
     stadiums_dict = {}
     for s in stadiums:
         stadiums_dict[s] = ''
-    team.wsta = stadiums_dict
+    team.stadium = stadiums_dict
     for ii, rows in dfTemporary.iterrows(): # Iterater gjennom dfTemporary
         if ii[1] > 0:   # Den første hjemmekampen for hvert lag vil alltid ha indeks 0
             if dfTemporary.iloc[ii[1]]['Dato'][-4:] == dfTemporary.iloc[ii[1]-1]['Dato'][-4:]:  # Sjekker at årene for de to resultatene som sammenlignes er like
@@ -429,13 +430,17 @@ def coord_stadium(stadium):
     except:
         print('Fant ikke koordinater til {stadium}'.format(stadium=stadium))
 
-# Finner koordinater for alle lag. "Stadium"-attributten i klassen blir da en dictionary der 'Name' er stadionnavn og 'Coord' er koordinater til stadion.
+
+# Finner koordinater for alle lag. "Stadium"-attributten i klassen blir da en dictionary der 'Key' er stadionnavn og 'Value' er koordinater til stadion.
+start_coord = time.time() # For å ta tiden på hvor lang tid det tar å finne koordinater
 for team in Fotballag.instances:
-    coord = coord_stadium(team.stadium)
-    team.stadium = {'Name':team.stadium, 'Coord' : coord}
+    for key in team.stadium.keys():
+        coord = coord_stadium(key)
+        team.stadium[key] = coord
+        print('Fant koordinater for ' + key)
 
 
-# Finner de nest nærmeste værstasjone for alle lag i Fotballag.instances uten å laste ned informasjon om alle værstasjonene i Norge (som blr gjort i v1.2)
+# Finner de nest nærmeste værstasjone for alle lag i Fotballag.instances uten å laste ned informasjon om alle værstasjonene i Norge (som ble gjort i v1.2)
     # Lager først en funksjon for å gjøre dette, der coord er input. Denne er lagret i Stadium['Coord'] for hvert objekt i klassen Fotballag
 def closest_wsta(coord, additional_wsta = 5):
     wsta = []
@@ -451,17 +456,24 @@ def closest_wsta(coord, additional_wsta = 5):
         wsta.append(station['id'])
     return wsta
 
-    # Finner de fem neste værstasjonene for alle lag ved å bruke funksjonen ovenfor
+    # Finner de ti neste værstasjonene for alle lag ved å bruke funksjonen ovenfor
 for team in Fotballag.instances:
     print('Finner værstasjoner for ' + team.name + '...')
-    coord = team.stadium['Coord']
-    team.wsta = closest_wsta(coord, 10)
+    try:
+        coord = list(team.stadium.values())[-1]
+        team.wsta = closest_wsta(coord, 20)
+    except:
+        continue
+
+time_coord = round(time.time() - start_coord,2)
 
 #-------------------------------------------------#
 # Finner temperature, vindstyrke og nedbør den aktuelle dagen
-temperature = []
-wind = []
-precipitation = []
+start_weather = time.time()
+# Legger data over vind og temperature til dfSesong
+dfSesong['Temp'] = None
+dfSesong['Vind'] = None
+dfSesong['Precip'] = None
 for i in range(len(dfSesong.index)):      # for i in range(len(dfSesong.index)): (den linjen som egentlig skal være her)
     # print('Vær for kamp ' + str(i+1) + '...') Overflødig når man faktisk finner vind og temperature for de fleste kamper
     hour=15 # Klokkeslett (Time)
@@ -485,57 +497,70 @@ for i in range(len(dfSesong.index)):      # for i in range(len(dfSesong.index)):
                 r = requests.get(endpoint,auth=(client_id,''))
                 json = r.json()
                 if not tempObs:
-                    for elem in range(0,len(json['data'])):
-                        if not tempObs:
-                            try:
-                                for key in json['data'][elem]['observations']:
-                                    for value in (key.values()):
-                                        if not tempObs:
-                                            if value == 'air_temperature':
-                                                tempObs = list(key.values())[list(key.values()).index('air_temperature') + 1]
-                                                temperature.append(tempObs)
-                                                print('Fant temperatur for kamp ' + str(i+1))
-                            except:
-                                continue
+                    try:
+                        for elem in range(0,len(json['data'])):
+                            if not tempObs:
+                                try:
+                                    for key in json['data'][elem]['observations']:
+                                        for value in (key.values()):
+                                            if not tempObs:
+                                                if value == 'air_temperature':
+                                                    tempObs = list(key.values())[list(key.values()).index('air_temperature') + 1]
+                                                    dfSesong.loc[i,'Temp'] = tempObs
+                                                    print('Fant temperatur for kamp ' + str(i+1))
+                                except:
+                                    continue
+                    except KeyError:
+                        dfSesong.loc[i, 'Temp'] = '-'
+                        print('Fant ikke temperatur for kamp' + str(i+1))
+
                 if not windObs:
-                    for elem in range(0,len(json['data'])):
-                        if not windObs:
-                            try:
-                                for key in json['data'][elem]['observations']:
-                                    for value in (key.values()):
-                                        if not windObs:
-                                            if value == 'wind_speed':
-                                                windObs = list(key.values())[list(key.values()).index('wind_speed') + 1]
-                                                wind.append(windObs)
-                                                print('Fant vind for kamp ' + str(i+1))
-                            except:
-                                continue
+                    try:
+                        for elem in range(0,len(json['data'])):
+                            if not windObs:
+                                try:
+                                    for key in json['data'][elem]['observations']:
+                                        for value in (key.values()):
+                                            if not windObs:
+                                                if value == 'wind_speed':
+                                                    windObs = list(key.values())[list(key.values()).index('wind_speed') + 1]
+                                                    dfSesong.loc[i, 'Vind'] = windObs
+                                                    print('Fant vind for kamp ' + str(i+1))
+                                except:
+                                    continue
+                    except KeyError:
+                        dfSesong.loc[i, 'Vind'] = '-'
+                        print('Fant ikke vinddata for kamp' + str(i+1))
                 if precipObs == '':
-                    for elem in range(0,len(json['data'])):
-                        if precipObs == '':
-                            try:
-                                for key in json['data'][elem]['observations']:
-                                    for value in (key.values()):
-                                        if value == 'sum(precipitation_amount P1D)' and precipObs == '':
-                                            precipObs = list(key.values())[list(key.values()).index('sum(precipitation_amount P1D)') + 1]
-                                            precipitation.append(precipObs)
-                                            print('Fant nedbør for kamp ' + str(i+1))
-                            except:
-                                continue
-    if not tempObs:
-        temperature.append('-')
-    if not windObs:
-        wind.append('-')
-    if not precipObs and precipObs != 0:
-        precipitation.append('-')
-
-# Legger data over vind og temperature til dfSesong
-dfSesong['Temp'] = temperature[:-1]
-dfSesong['Vind'] = wind[:-1]
-dfSesong['Precip'] = precipitation
+                    try:
+                        for elem in range(0,len(json['data'])):
+                            if precipObs == '':
+                                try:
+                                    for key in json['data'][elem]['observations']:
+                                        for value in (key.values()):
+                                            if value == 'sum(precipitation_amount P1D)' and precipObs == '':
+                                                precipObs = list(key.values())[list(key.values()).index('sum(precipitation_amount P1D)') + 1]
+                                                dfSesong.loc[i, 'Precip'] = precipObs
+                                                print('Fant nedbør for kamp ' + str(i+1))
+                                except:
+                                    continue
+                    except KeyError:
+                        dfSesong.loc[i, 'Precip'] = '-'
+                        print('Fant ikke nedbørsdata for kamp' + str(i+1))
 
 
 
+time_weather = round(time.time() - start_weather,2)
+
+
+print('Total tid brukt: {min} minutter og {sek} sekunder.'.format(min = int((time.time() - tot_start) // 60),
+                                                                  sek = int((time.time() - tot_start) % 60)))
+print('Tid brukt for å finne tilskuertall: {min} minutter og {sek} sekunder.'.format(min = int(time_tilskuertall // 60),
+                                                                                    sek = int(time_tilskuertall%60)))
+print('Tid brukt for å finne koordinater: {min} minutt(er) og {sek} sekunder.'.format(min = int(time_coord // 60),
+                                                                                    sek = int(time_coord%60)))
+print('Tid brukt for å finne informasjon om vær: {min} minutter og {sek} sekunder.'.format(min = int(time_weather // 60),
+                                                                                           sek = int(time_weather % 60)))
 
 #-------------------------------------------------#
 
@@ -546,6 +571,7 @@ def to_csv(dataframe, filnavn):
     print('Lagret til CSV-fil i path.')
     return
 
+to_csv(dfSesong, 'tilskuertall_260419')
 
 # for å se antall av en verdi i en dataframe:
 # dfSesong['Ukedag'].value_counts()
