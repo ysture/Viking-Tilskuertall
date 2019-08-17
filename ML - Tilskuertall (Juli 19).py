@@ -117,9 +117,10 @@ regr.score(nanSpectEncoded, nanSpect['Tilskuertall']) # In-sample R^2 score
 # Linear regression model with train and test set
 year = spect['Dato'].apply(lambda x: datetime.strptime(x, "%d.%m.%Y").year) # Create a year column to be able to index out test set based on year (2018 is test set)
 test_y = nanSpect['Tilskuertall'][year == 2018] # Dependent variable test set
-test_x = onehotencoder.fit_transform(nanSpect[categorical_columns][year==2018]).toarray() # Predictor variables test set (transformed to categorical variables)
-train_y = nanSpect['Tilskuertall'][year != 2018] # Dependente variable train set
-train_x = onehotencoder.fit_transform(nanSpect[categorical_columns][year!=2018]).toarray() # Predictor variables train set (transformed to categorical variables)
+train_y = nanSpect['Tilskuertall'][year != 2018] # Dependent variable train set
+x_array = onehotencoder.fit_transform(nanSpect[categorical_columns]).toarray() # Splits dependent variables into train and test set (first using onehotencoder, then indexing into train_x and test_x using length of test set
+test_x = x_array[-len(test_y):]
+train_x = x_array[:-len(test_y)]
 
 regr_oos = linear_model.LinearRegression()
 regr_oos.fit(X=train_x, y=train_y)
@@ -127,3 +128,21 @@ regr_oos.coef_
 preds_oos = regr_oos.predict(X=test_x)
 regr_oos.score(train_x, train_y) # In-sample R^2 score (with test set)
 regr_oos.score(test_x, test_y) # Out-of-sample R^2 score
+
+
+
+# Noe er rat med regr_oos.score, prøver å debugge og finne ut hva som er galt. Ser ut fra de 3 neste linjene ut som test_x og test_y stemmer overens med hverandre
+onehotencoder.inverse_transform(test_x)
+test_y
+nanSpect.ix[3616]
+import math
+regr_residuals = [x**2 for x in (list(nanSpect['Tilskuertall'] - preds))] # Residuals for regression model without train and test set
+regr_oos_residuals = [x**2 for x in (list(nanSpect['Tilskuertall'][year==2018] - preds_oos))]
+sorted(regr_oos_residuals, reverse=True)[:15]
+max(regr_oos_residuals, )
+sorted(regr_residuals, reverse=True)[:15]
+
+plt.plot(regr_residuals, '.')
+plt.plot(regr_oos_residuals, '.')
+
+
