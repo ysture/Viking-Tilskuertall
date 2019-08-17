@@ -126,6 +126,7 @@ regr_oos = linear_model.LinearRegression()
 regr_oos.fit(X=train_x, y=train_y)
 regr_oos.coef_
 preds_oos = regr_oos.predict(X=test_x)
+preds_oos = [int(x) for x in preds_oos] # Convert all spectator predictions to integer
 regr_oos.score(train_x, train_y) # In-sample R^2 score (with test set)
 regr_oos.score(test_x, test_y) # Out-of-sample R^2 score
 
@@ -136,13 +137,26 @@ onehotencoder.inverse_transform(test_x)
 test_y
 nanSpect.ix[3616]
 import math
-regr_residuals = [x**2 for x in (list(nanSpect['Tilskuertall'] - preds))] # Residuals for regression model without train and test set
-regr_oos_residuals = [x**2 for x in (list(nanSpect['Tilskuertall'][year==2018] - preds_oos))]
+regr_residuals = [int(x**2) for x in (list(nanSpect['Tilskuertall'] - preds))] # Residuals for regression model without train and test set
+regr_oos_residuals = [int(x**2) for x in (list(nanSpect['Tilskuertall'][year==2018] - preds_oos))]
 sorted(regr_oos_residuals, reverse=True)[:15]
-max(regr_oos_residuals, )
+highest_regr_oos_residuals = [regr_oos_residuals.index(x) for x in sorted(regr_oos_residuals, reverse=True)[:15]]
 sorted(regr_residuals, reverse=True)[:15]
 
-plt.plot(regr_residuals, '.')
-plt.plot(regr_oos_residuals, '.')
+for i in sorted(highest_regr_oos_residuals, reverse=True): # Remove the 15 highest residuals (way too high, need to be looked into)
+    del regr_oos_residuals[i]
+    del preds_oos[i]
+plt.plot(regr_residuals[-240:], '.') # Plots residuals where the linear regression model is trained on the whole data set
+plt.plot(regr_oos_residuals, '.') # Plots residuals where the linear regression model is trained only on the training set
 
+plt.plot(nanSpect['Tilskuertall'][year==2018].reset_index(drop=True), '.') # Plots real spectator data
+plt.plot(preds[-len(nanSpect['Tilskuertall'][year==2018]):], '.') # Plots predictions trained on the whole data set
+plt.plot(preds_oos, '.') # Plots test predictions with regression model trained on a train set
+
+# TODO, get a nice summary of the regression model, close to a stargazer setup (with R^2, adjusted R^2 and predictor variables together with p-values and coefficients)
+# TODO, create regression model where other predictor variables are included (also the numeric ones). Or are they included now?
+# TODO, create regression model with best subset selection
+# TODO create ridge and lasso regression models
+# TODO create SVM model
+# TODO create random forest model (above or under 1.5*average spectators for example)
 
