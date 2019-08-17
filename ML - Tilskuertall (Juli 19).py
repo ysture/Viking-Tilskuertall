@@ -114,8 +114,16 @@ regr.fit(X=nanSpectEncoded, y=nanSpect['Tilskuertall']) # Create model with X (p
 regr.coef_ # Display coefficients
 preds = regr.predict(nanSpectEncoded) # List predictions of stadium attendances
 regr.score(nanSpectEncoded, nanSpect['Tilskuertall']) # In-sample R^2 score
-    # Linear model with train and test set
-test_y = nanSpect['Tilskuertall'][nanSpect['Dato']]
-regr_oos = linear_model.LinearRegression()
+# Linear regression model with train and test set
+year = spect['Dato'].apply(lambda x: datetime.strptime(x, "%d.%m.%Y").year) # Create a year column to be able to index out test set based on year (2018 is test set)
+test_y = nanSpect['Tilskuertall'][year == 2018] # Dependent variable test set
+test_x = onehotencoder.fit_transform(nanSpect[categorical_columns][year==2018]).toarray() # Predictor variables test set (transformed to categorical variables)
+train_y = nanSpect['Tilskuertall'][year != 2018] # Dependente variable train set
+train_x = onehotencoder.fit_transform(nanSpect[categorical_columns][year!=2018]).toarray() # Predictor variables train set (transformed to categorical variables)
 
-regr.score(nanSpectEncoded[:-100], nanSpect['Tilskuertall'][:100]) # In-sample R^2 score
+regr_oos = linear_model.LinearRegression()
+regr_oos.fit(X=train_x, y=train_y)
+regr_oos.coef_
+preds_oos = regr_oos.predict(X=test_x)
+regr_oos.score(train_x, train_y) # In-sample R^2 score (with test set)
+regr_oos.score(test_x, test_y) # Out-of-sample R^2 score
