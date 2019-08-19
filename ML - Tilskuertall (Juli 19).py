@@ -1,8 +1,14 @@
-import sklearn
+import sklearn # For machine learning algorithms
 import numpy as np
 import pandas as pd
+import matplotlib.pyplot as plt # For plotting
+from datetime import datetime # To convert to, and format as, datetime (first and foremost for the 'Dato' column)
+from sklearn import linear_model # For linear regression models
+from sklearn.preprocessing import OneHotEncoder # For converting to dummy variables before creating machine learning models
+import math # First and foremost for calculating residuals
+#--------------------------------------------------------------------------------------------------------------------------#
 
-spect = pd.read_csv('tilskuertall_160719.csv')
+spect = pd.read_csv('tilskuertall_160719.csv') # Load dataset scraped by script "TilskuerTippeligaen v1.6.py"
 
 # List first 20 objects in the spect dataframe
 pd.set_option('display.max_columns', 500)
@@ -15,6 +21,7 @@ spect.drop(columns='Unnamed: 0', axis=1)
 # TODO: få til value_counts()['-'] for alle kolonner
 # Count how many instances of '-' in each column in spect
 spect[['Temp', 'Vind', 'Precip']].apply(lambda x: x.value_counts()['-'], axis=0)
+spect['TV-kanal'].value_counts()
 
 
 # List types for all columns in spect
@@ -24,7 +31,7 @@ spect.dtypes
     # [Dato] to datetime
 spect['Dato'] = pd.to_datetime(spect['Dato'], dayfirst=True)
     # [Tilskuertall] to int
-spect['Tilskuertall'] = spect['Tilskuertall'].str.replace('\\xa0', '') # fjerner mellomrom (\xa0) som tusen-skilletegn
+spect['Tilskuertall'] = spect['Tilskuertall'].str.replace('\\xa0', '') # Removes space (\xa0) that is used as "thousand split" when loading the CSV file.
 spect['Tilskuertall'] = pd.to_numeric(spect['Tilskuertall'])
     # [Ukedag] to categorical
 spect['Ukedag'] = pd.Categorical(spect['Ukedag'])
@@ -43,7 +50,7 @@ spect['Derby'] = pd.Categorical(spect['Derby'])
     # Groups [TV-kanal] into three groups: no broadcasting, free broadcasting and exclusive broadcasting
         # Groups the channels
     dict_kanaler = {'Ingen': ['-', '', 'NaN'],
-                    'Gratis':['Hovedkamp', 'NRK1', 'NRK2', 'TV2', 'TV 2 Zebra', 'TV2 (HD)', 'MAX', 'TVNorge', 'Eurosport Norge', 'Eurosport 1', 'VOX'],
+                    'Gratis':['Hovedkamp', 'NRK1', 'NRK2', 'TV2', 'TV 2', 'TV 2 Zebra', 'TV2 (HD)', 'TV 2 (HD)', 'MAX', 'TVNorge', 'Eurosport Norge', 'Eurosport 1', 'VOX'],
                     'Betal':['Eurosport Player', 'Eurosport Pluss',
                              'C More Live','C More Live 2', 'C More Live 3', 'C More Live 4', 'C More Live HD',
                              'C More Hockey', 'C More Tennis', 'C More Extreme', 'C SPORTS', 'C More Fotball', 'C More Fotball HD',
@@ -59,7 +66,7 @@ spect['TV-kanal'] = pd.Categorical(spect['TV-kanal'])
     # [Form1] to category
 spect['Form1'] = pd.Categorical(spect['Form1'])
     # [Temp], [Vind] and [Precip], first make '-' values NaN, then convert column dtypes to float
-spect.replace('-',-100, inplace=True)
+spect.replace('-',np.NaN, inplace=True)
 spect.count() # Counts NAs after previous line has been run, shows that '-' values are turned into 'NaN' strings, not into actual NA values
     # [Temp], [Vind] and [Precip] to numeric (float)
 spect['Temp'] = pd.to_numeric(spect['Temp'])
@@ -71,9 +78,7 @@ spect['Precip'] = pd.to_numeric(spect['Precip'])
 
 
 # Simple visualization of the data set
-import matplotlib.pyplot as plt
 # Converts date column from datetime64 to datetime.date
-from datetime import datetime
 plt.plot(pd.to_datetime(spect['Dato'][spect['Hjemmelag']=='Viking'].to_numpy()),spect['Tilskuertall'][spect['Hjemmelag']=='Viking']) # Only plots Viking's spectator numbers
 
 # Plots all time series in a grid
@@ -101,21 +106,19 @@ nanSpect = spect.dropna()
 nanSpect = nanSpect[['Hjemmelag','Form1','TV-kanal','Ukedag','16. mai','Vind','Precip', 'Temp', 'Tilskuertall']]
 
 # Convert to categorical columns that can be handled by ML algorithms in sklearn
-from sklearn.preprocessing import OneHotEncoder
 categorical_columns = ['Hjemmelag', 'Form1', 'TV-kanal', 'Ukedag','16. mai']
 onehotencoder = sklearn.preprocessing.OneHotEncoder()
 nanSpectEncoded = onehotencoder.fit_transform(nanSpect[categorical_columns]).toarray()
 onehotencoder.categories_ # Displays all categories in the categorical columns that are now encoded
 
 # Create simple linear regression model of the data (without test and train data)
-from sklearn import linear_model
 regr = linear_model.LinearRegression() # Create regression element to in linear regression model
 regr.fit(X=nanSpectEncoded, y=nanSpect['Tilskuertall']) # Create model with X (predictors) and y (dependent variable)
 regr.coef_ # Display coefficients
 preds = regr.predict(nanSpectEncoded) # List predictions of stadium attendances
 regr.score(nanSpectEncoded, nanSpect['Tilskuertall']) # In-sample R^2 score
 # Linear regression model with train and test set
-year = spect['Dato'].apply(lambda x: datetime.strptime(x, "%d.%m.%Y").year) # Create a year column to be able to index out test set based on year (2018 is test set)
+year = spect['Dato'].apply(lambda x: datetime.strptime(str(x)[:10], "%Y-%m-%d").year) # Create a year column to be able to index out test set based on year (2018 is test set)
 test_y = nanSpect['Tilskuertall'][year == 2018] # Dependent variable test set
 train_y = nanSpect['Tilskuertall'][year != 2018] # Dependent variable train set
 x_array = onehotencoder.fit_transform(nanSpect[categorical_columns]).toarray() # Splits dependent variables into train and test set (first using onehotencoder, then indexing into train_x and test_x using length of test set
@@ -130,13 +133,6 @@ preds_oos = [int(x) for x in preds_oos] # Convert all spectator predictions to i
 regr_oos.score(train_x, train_y) # In-sample R^2 score (with test set)
 regr_oos.score(test_x, test_y) # Out-of-sample R^2 score
 
-
-
-# Noe er rat med regr_oos.score, prøver å debugge og finne ut hva som er galt. Ser ut fra de 3 neste linjene ut som test_x og test_y stemmer overens med hverandre
-onehotencoder.inverse_transform(test_x)
-test_y
-nanSpect.ix[3616]
-import math
 regr_residuals = [int(x**2) for x in (list(nanSpect['Tilskuertall'] - preds))] # Residuals for regression model without train and test set
 regr_oos_residuals = [int(x**2) for x in (list(nanSpect['Tilskuertall'][year==2018] - preds_oos))]
 sorted(regr_oos_residuals, reverse=True)[:15]
@@ -153,8 +149,8 @@ plt.plot(nanSpect['Tilskuertall'][year==2018].reset_index(drop=True), '.') # Plo
 plt.plot(preds[-len(nanSpect['Tilskuertall'][year==2018]):], '.') # Plots predictions trained on the whole data set
 plt.plot(preds_oos, '.') # Plots test predictions with regression model trained on a train set
 
-# TODO, get a nice summary of the regression model, close to a stargazer setup (with R^2, adjusted R^2 and predictor variables together with p-values and coefficients)
 # TODO, create regression model where other predictor variables are included (also the numeric ones). Or are they included now?
+# TODO, get a nice summary of the regression model, close to a stargazer setup (with R^2, adjusted R^2 and predictor variables together with p-values and coefficients)
 # TODO, create regression model with best subset selection
 # TODO create ridge and lasso regression models
 # TODO create SVM model
