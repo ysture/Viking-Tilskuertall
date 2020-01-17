@@ -4,19 +4,89 @@ import pandas as pd
 import matplotlib.pyplot as plt # For plotting
 from datetime import datetime # To convert to, and format as, datetime (first and foremost for the 'Dato' column)
 from sklearn import linear_model # For linear regression models
+import calendar # For finding weekday given weekady int
 from sklearn.preprocessing import OneHotEncoder # For converting to dummy variables before creating machine learning models
 import math # First and foremost for calculating residuals
 #--------------------------------------------------------------------------------------------------------------------------#
 
-spect = pd.read_csv('tilskuertall_160719.csv') # Load dataset scraped by script "TilskuerTippeligaen v1.6.py"
+spect = pd.read_csv('tilskuertall_170119.csv', encoding='iso8859_10') # Load dataset scraped by script "TilskuerTippeligaen v1.6.py"
+
+# Change all '-' values in the df (except for in column [TV-kanal]) to NaN
+spect = spect.drop(columns='Unnamed: 0', axis=1)
+# Change 'Dato' column to datetime format
+spect['Dato'] = pd.to_datetime(spect['Dato'], dayfirst=True)
+# [Tilskuertall] to int
+spect['Tilskuertall'] = spect['Tilskuertall'].str.replace('\\xa0', '') # Removes space (\xa0) that is used as "thousand split" when loading the CSV file.
+spect['Tilskuertall'] = pd.to_numeric(spect['Tilskuertall'])
+# [Temp], [Vind] and [Precip], first make '-' values NaN, then convert column dtypes to float
+spect.replace('-',np.NaN, inplace=True)
+spect.count() # Counts NAs after previous line has been run, shows that '-' values are turned into 'NaN' strings, not into actual NA values
+# [Temp], [Vind] and [Precip] to numeric (float)
+spect['Temp'] = pd.to_numeric(spect['Temp'])
+spect['Vind'] = pd.to_numeric(spect['Vind'])
+spect['Precip'] = pd.to_numeric(spect['Precip'])
+
+# Some basic plotting
+# Seasons 16 and 17
+spect1617 = spect[(spect['Dato'].dt.year == 2017) | (spect['Dato'].dt.year == 2016)]
+spect1617 = spect1617[spect.Form5 != 'For få kamper']
+spect1617['Form5'] = pd.to_numeric(spect1617['Form5'])
+fig = plt.subplot()
+
+plt.scatter(spect1617.Form5, spect1617.Tilskuertall)
+
+# Viking
+    # Scatter med kanal
+spectV = spect[spect.Hjemmelag == 'Viking']
+spectVGratis = spectV[spectV['TV-kanal'] == 'Gratis']
+spectVIngen = spectV[spectV['TV-kanal'] == 'Ingen']
+spectVBetal = spectV[spectV['TV-kanal'] == 'Betal']
+
+plt.scatter(spectVGratis.Dato, spectVGratis.Tilskuertall,
+         marker="o", c='g', label = 'Gratis')
+plt.scatter(spectVIngen.Dato, spectVIngen.Tilskuertall,
+         marker="o", c='r', label = 'Ingen')
+plt.scatter(spectVBetal.Dato, spectVBetal.Tilskuertall,
+         marker="o", c='b', label = 'Betal')
+plt.legend()
+plt.show()
+
+    # Scatter med ukedag
+colors = ['b', 'g', 'r', 'c', 'm', 'y', 'k']
+for dag in spectV.Ukedag.unique():
+    plt.scatter(spectV.Dato[spectV.Ukedag == dag], spectV.Tilskuertall[spectV.Ukedag == dag],
+                marker="o", c=colors[dag-1], label = list(calendar.day_abbr)[dag-1])
+plt.legend()
+plt.show()
+
+    # Barplot med average gitt ukedag (Viking)
+for dag in spectV.Ukedag.unique():
+    plt.bar(dag, spectV.Tilskuertall[spectV.Ukedag == dag].mean(), color='b')
+plt.show()
+
+    # Barplot med average gitt ukedag (Alle)
+for dag in spect.Ukedag.unique():
+    plt.bar(dag, spect.Tilskuertall[spect.Ukedag == dag].mean(), color='b')
+plt.show()
+
+    # Barplot med average gitt TV-kanal (Viking)
+for kanal in spectV['TV-kanal'].unique():
+    plt.bar(kanal, spectV.Tilskuertall[spectV['TV-kanal'] == kanal].mean(), color='b')
+plt.show()
+
+    # Barplot med average gitt TV-kanal (Alle)
+for kanal in spect['TV-kanal'].unique():
+    plt.bar(kanal, spect.Tilskuertall[spect['TV-kanal'] == kanal].mean(), color='b')
+plt.show()
+
+
 
 # List first 20 objects in the spect dataframe
 pd.set_option('display.max_columns', 500)
 pd.set_option('display.width', 1000)
 spect.head(20)
 
-# Change all '-' values in the df (except for in column [TV-kanal]) to NaN
-spect.drop(columns='Unnamed: 0', axis=1)
+
 
 # TODO: få til value_counts()['-'] for alle kolonner
 # Count how many instances of '-' in each column in spect
@@ -47,20 +117,6 @@ spect['16. mai'] = pd.Categorical(spect['16. mai'])
     # For [Derby], first fill all NAs out with 0, and then turns into category
 spect['Derby'].fillna(0, inplace=True)
 spect['Derby'] = pd.Categorical(spect['Derby'])
-    # Groups [TV-kanal] into three groups: no broadcasting, free broadcasting and exclusive broadcasting
-        # Groups the channels
-    dict_kanaler = {'Ingen': ['-', '', 'NaN'],
-                    'Gratis':['Hovedkamp', 'NRK1', 'NRK2', 'TV2', 'TV 2', 'TV 2 Zebra', 'TV2 (HD)', 'TV 2 (HD)', 'MAX', 'TVNorge', 'Eurosport Norge', 'Eurosport 1', 'VOX'],
-                    'Betal':['Eurosport Player', 'Eurosport Pluss',
-                             'C More Live','C More Live 2', 'C More Live 3', 'C More Live 4', 'C More Live HD',
-                             'C More Hockey', 'C More Tennis', 'C More Extreme', 'C SPORTS', 'C More Fotball', 'C More Fotball HD',
-                             'TV2 Sumo', 'TV2 SPORT', 'TV 2 SPORT 1', 'TV 2 SPORT 2', 'TV 2 SPORT 3' , 'TV 2 SPORT 4', 'TV 2 SPORT 5', 'TV 2 SPORT 5 (HD)',
-                             'TV 2 Sport Premium 1', 'TV 2 Sport Premium 2', 'TV 2 Sport Premium 3', 'TV 2 Sport Premium 4',
-                             'TV 2 Sport Premium 5', 'TV 2 Sport Premium 6', 'TV 2 Sport Premium 7', 'TV 2 Sport Premium 8']}
-    for ii, r in spect.iterrows():
-        for key in dict_kanaler.keys():
-            if spect.at[ii,'TV-kanal'] in dict_kanaler[key]:
-                spect.at[ii,'TV-kanal'] = key
     # [TV-kanaler] to category
 spect['TV-kanal'] = pd.Categorical(spect['TV-kanal'])
     # [Form1] to category

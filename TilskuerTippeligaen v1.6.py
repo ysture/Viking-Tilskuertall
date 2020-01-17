@@ -9,6 +9,7 @@ import numpy
 import time
 import geopy.distance # For å finne distanse mellom to koordinater
 from geopy.geocoders import Nominatim
+from time import sleep
 
 
 # Ber om input for å se informasjon fra sesong 2001 til 2018.
@@ -81,7 +82,6 @@ class Fotballag:
                     else:
                         dfSesong.at[ii[0],'Form{form}'.format(form=formLengde)] = 'For få kamper' # Dersom indeks i dfTemporary ikke er større enn formLengde -1, er kampen nødt til å være blant de første i sesongen
 
-
     def goalsLastHomegame(self):
         # Finner antall scorede mål forrige hjemmekamp (for hjemmelaget) og lager en liste med alle forskjellige stadionnavn som lagres i objektet til laget
             dfTemporary = dfSesong[(dfSesong.Hjemmelag == self.name)] # Lager en midlertidig df for hvert lag
@@ -146,7 +146,7 @@ odd = Fotballag('Odd', 'Skagerak Arena', 'Skien')
 stabaek = Fotballag('Stabæk', 'Nadderud', 'Bærum')
 stabaek.derbylag = ['Vålerenga']
 
-sandefjord = Fotballag('Sandefjord', 'Komplett Arena', 'Sandefjord')
+sandefjord = Fotballag('Sandefjord', 'Sandefjord', 'Sandefjord')
 
 sarpsborg = Fotballag('Sarpsborg 08', 'Sarpsborg Stadion', 'Sarpsborg')
 sarpsborg.derbylag = ['Fredrikstad']
@@ -157,12 +157,12 @@ ranheim.derbylag = ['Rosenborg']
 sandnesulf = Fotballag('Sandnes Ulf', 'Sandnes Stadion', 'Sandnes')
 sandnesulf.derbylag = ['Viking']
 
-bryne = Fotballag('Bryne', 'Bryne Stadion', 'Bryne')
+bryne = Fotballag('Bryne', 'Bryne', 'Bryne')
 bryne.derbylag = ['Viking']
 
 kongsvinger = Fotballag('Kongsvinger', 'Gjemselund', 'Kongsvinger')
 
-honefoss = Fotballag('Hønefoss', 'AKA Arena', 'Hønefoss')
+honefoss = Fotballag('Hønefoss', 'Hønefoss', 'Hønefoss')
 
 haugesund = Fotballag('Haugesund', 'Haugesund Stadion', 'Haugesund')
 haugesund.derbylag = ['Viking']
@@ -245,21 +245,6 @@ bortelagOrdnet = [elem.replace('\xa0', ' ') for elem in bortelagOrdnet]
 
 
 #---------------------------------------------------------#
-# Ordner opp i kanalliste
-
-dict_kanaler = {'Ingen': ['-', ''],
-                'Gratis':['Hovedkamp', 'NRK1', 'NRK2', 'TV2', 'TV 2 Zebra', 'TV2 (HD)', 'MAX', 'TVNorge',
-                          'Eurosport Norge', 'Eurosport 1', 'VOX'],
-                'Betal':['Eurosport Player', 'Eurosport Pluss',
-                         'C More Live','C More Live 2', 'C More Live 3', 'C More Live 4', 'C More Live HD',
-                         'C More Hockey', 'C More Tennis', 'C More Extreme', 'C SPORTS', 'C More Fotball',
-                         'C More Fotball HD', 'TV2 Sumo', 'TV2 SPORT', 'TV 2 SPORT 1', 'TV 2 SPORT 2', 'TV 2 SPORT 3' ,
-                         'TV 2 SPORT 4', 'TV 2 SPORT 5', 'TV 2 SPORT 5 (HD)',
-                         'TV 2 Sport Premium 1', 'TV 2 Sport Premium 2', 'TV 2 Sport Premium 3', 'TV 2 Sport Premium 4',
-                         'TV 2 Sport Premium 5', 'TV 2 Sport Premium 6', 'TV 2 Sport Premium 7', 'TV 2 Sport Premium 8']}
-
-
-#---------------------------------------------------------#
 #---------------------------------------------------------#
 
 # Finner tilskuertall for hver kamp i hver sesong
@@ -324,35 +309,46 @@ for t in tv_kanal:
     if tv_kanal.index(t) <= (len(tv_kanal_01_07)-1):
         tv_kanal[tv_kanal.index(t)] = tv_kanal_01_07[tv_kanal.index(t)]
 
+# Ordner opp i kanalliste
+dict_kanaler = {'Ingen': ['-', ''],
+                'Gratis':['Hovedkamp', 'NRK1', 'NRK2', 'TV2', 'TV 2 Zebra', 'TV2 (HD)', 'MAX', 'TVNorge',
+                          'Eurosport Norge', 'Eurosport 1', 'VOX'],
+                'Betal':['Eurosport Player', 'Eurosport Pluss',
+                         'C More Live','C More Live 2', 'C More Live 3', 'C More Live 4', 'C More Live HD',
+                         'C More Hockey', 'C More Tennis', 'C More Extreme', 'C SPORTS', 'C More Fotball',
+                         'C More Fotball HD', 'TV2 Sumo', 'TV2 SPORT', 'TV 2 SPORT 1', 'TV 2 SPORT 2', 'TV 2 SPORT 3' ,
+                         'TV 2 SPORT 4', 'TV 2 SPORT 5', 'TV 2 SPORT 5 (HD)',
+                         'TV 2 Sport Premium 1', 'TV 2 Sport Premium 2', 'TV 2 Sport Premium 3', 'TV 2 Sport Premium 4',
+                         'TV 2 Sport Premium 5', 'TV 2 Sport Premium 6', 'TV 2 Sport Premium 7', 'TV 2 Sport Premium 8']}
 
+# Creating a column with channel category
+tv_kanal_kategori = []
+for i in tv_kanal:
+    for key in dict_kanaler.keys():
+        if i in dict_kanaler[key]:
+            tv_kanal_kategori.append(key)
 
 #---------------------------------------------------------#
 #---------------------------------------------------------#
 
-# Lager en liste som skal bli kolonnen "Resultater". Denne er tom
-# fordi den da kan fylles ut gjennom en iteration senere i scriptet (rad 248 i scriptet)
+# Lager en lister som skal bli kolonner. Disse er tomme
+# fordi de da kan fylles ut gjennom en iteration senere i scriptet (rad 248 i scriptet)
 derby = ["-"]*len(datoerOrdnet)
 rival = ["-"]*len(datoerOrdnet)
 temperature = ["-"]*len(datoerOrdnet)
 wind = ["-"]*len(datoerOrdnet)
 downfall = ["-"]*len(datoerOrdnet)
 
-
 print("Begynner å lage datasettet...")
 time.sleep(1)
 
-HovedDataSet = list(zip(datoerOrdnet,
-                        hjemmelagOrdnet, bortelagOrdnet,
-                        tilskuertall,
-                        hjemmelagGoals, bortelagGoals,
-                        tv_kanal))
+HovedDataSet = list(zip(datoerOrdnet, hjemmelagOrdnet, bortelagOrdnet,
+                        tilskuertall, hjemmelagGoals, bortelagGoals,
+                        tv_kanal_kategori))
     # lager tabellen med pandas
 dfSesong = pandas.DataFrame(data=HovedDataSet,
-                                columns=['Dato',
-                                         'Hjemmelag', 'Bortelag',
-                                         'Tilskuertall',
-                                         'Mål_hjemmelag', 'Mål_bortelag',
-                                         'TV-kanal'])
+                                columns=['Dato', 'Hjemmelag', 'Bortelag', 'Tilskuertall',
+                                         'Mål_hjemmelag', 'Mål_bortelag','TV-kanal'])
 
 print("Ferdig å lage datasettet.")
 
@@ -393,7 +389,7 @@ print('Fant lagenes form.')
 for team in Fotballag.instances:
     for ii,row in dfSesong.iterrows():
         if (dfSesong.iloc[ii]['Hjemmelag'] == team.name and dfSesong.iloc[ii]['Bortelag'] in team.derbylag):
-            dfSesong.set_value(ii, 'Derby', 1)
+            dfSesong.at[ii, 'Derby'] = 1
         else:
             continue
 
@@ -402,16 +398,23 @@ for team in Fotballag.instances:
 #-------------------------------------------------#
 # Finner koordinatene til hver stadion
 def coord_stadium(stadium):
-    try:
-        geolocator = Nominatim(user_agent='myapplication')
-        location = geolocator.geocode(stadium)
-        lon = location.longitude
-        lat = location.latitude
-        coord = (lon, lat)
-        return coord
-    except:
-        print('Fant ikke koordinater til {stadium}'.format(stadium=stadium))
-
+    num_retries = 5
+    sleep_time = 2 # seconds
+    for x in range(0, num_retries):
+        try:
+            geolocator = Nominatim(user_agent='myapplication')
+            location = geolocator.geocode(stadium)
+            lon = location.longitude
+            lat = location.latitude
+            coord = (lon, lat)
+            return coord
+            print('Fant til {stadium}'.format(stadium=stadium))
+            break
+        except Exception as e:
+            pass
+            sleep(sleep_time)
+            if x == num_retries:
+                print(e, 'Prøver for siste gang å finne koordinatene til {stadium}'.format(stadium=stadium))
 
 def closest_wsta(coord, additional_wsta = 5, maxDist = 30):
     wsta = {}
@@ -424,37 +427,28 @@ def closest_wsta(coord, additional_wsta = 5, maxDist = 30):
     r = requests.get(endpoint, auth=(client_id, ''))
     json = r.json()
     for station in json['data']:
-        dist = geopy.distance.vincenty(coord, station['geometry']['coordinates']).km
+        dist = geopy.distance.distance(coord, station['geometry']['coordinates']).km
         if dist < maxDist:
-            wsta[station['id']] = geopy.distance.vincenty(coord, station['geometry']['coordinates']).km # Regner ut distansen (i luftlinje) mellom værstasjonen og stadion
+            wsta[station['id']] = geopy.distance.distance(coord, station['geometry']['coordinates']).km # Regner ut distansen (i luftlinje) mellom værstasjonen og stadion
     return wsta
-
 
 # Finner koordinater for alle lag. "Stadium"-attributten i klassen blir da en dictionary der 'Key' er stadionnavn og 'Value' er koordinater til stadion.
 start_coord = time.time() # For å ta tiden på hvor lang tid det tar å finne koordinater
 for team in Fotballag.instances:
     team.stadium = {team.stadium : coord_stadium(team.stadium)}
-    team.location1 = {team.location1 : coord_stadium(team.location1)}
-    print('Fant koordinater for ' + team.name)
 
 
 # Finner de nest nærmeste værstasjone for alle lag i Fotballag.instances uten å laste ned informasjon om alle værstasjonene i Norge (som ble gjort i v1.2)
     # Lager først en funksjon for å gjøre dette, der coord er input. Denne er lagret i Stadium['Coord'] for hvert objekt i klassen Fotballag
 
-
-
-    # Finner de ti neste værstasjonene for alle lag ved å bruke funksjonen ovenfor
+    # Finner de 20 neste værstasjonene for alle lag ved å bruke funksjonen ovenfor
 for team in Fotballag.instances:
-    print('Finner værstasjoner for ' + team.name + '...')
     try:
         coord = list(team.stadium.values())[-1]
         team.wsta = closest_wsta(coord, 20)
-    except:
+    except Exception as e:
+        print(e, 'Could not find weather stations for {team}'.format(team=team.name))
         continue
-
-for team in Fotballag.instances:
-    print(team.name)
-    print(team.wsta)
 
 time_coord = round(time.time() - start_coord,2)
 
@@ -571,14 +565,10 @@ print('Tid brukt for å finne informasjon om vær: {min} minutter og {sek} sekun
 
 # Lager en funksjon for enkel lagring
 
-dfSesong.to_csv('tilskuertall_170119.csv', encoding='iso8859_10')
+dfSesong.to_csv('tilskuertall_180119.csv', encoding='iso8859_10')
 
 # for å se antall av en verdi i en dataframe:
 # dfSesong['Ukedag'].value_counts()
 # print ut hele dataframen:
 print(dfSesong.to_string())
 # dfHjemmekamper['Nedbør'].value_counts
-
-
-## TO DO
-# Noen av stadionene har for lang avstand dersom man bruker 20 nærmeste værstasjoner. Sett begrensninger på dette
