@@ -11,7 +11,7 @@ import geopy.distance # For å finne distanse mellom to koordinater
 from geopy.geocoders import Nominatim
 
 
-# Ber om input for å se informasjon fra sesong 2001 til 2017.
+# Ber om input for å se informasjon fra sesong 2001 til 2018.
 fraSesong = int(input('Hva er det første sesongen du vil se informasjon fra? Velg fra 2001 til 2018: '))
 
 tot_start = time.time()
@@ -30,34 +30,36 @@ class Fotballag:
         self.instances.append(self)     # Appender hver instance som initieres i fotballagklassen.
                                         # Vær obs på at det er __repr__ som appendes, men dette har ikke noe å si
                                         # når målet er å tråle gjennom (iterate) gjennom listen
-    def result(self):
-        for ii, row in dfSesong.iterrows():
-            if dfSesong.iloc[ii]['Hjemmelag'] == team.name:
-                resNum = int(dfSesong.iloc[ii]['Mål_hjemmelag']) - int(dfSesong.iloc[ii]['Mål_bortelag'])
-                if resNum > 0:
-                    dfSesong.at[ii, 'Resultat'] = 'V'
-                elif resNum == 0:
-                    dfSesong.at[ii, 'Resultat'] = 'U'
-                elif resNum < 0:
-                    dfSesong.at[ii, 'Resultat'] = 'T'
 
     def finnForm(self, formLengde):
         dfTemporary = dfSesong[(dfSesong.Hjemmelag == self.name) | (dfSesong.Bortelag == self.name)] # Lager en midlertidig df for hvert lag
         new_index = list(range(0, len(dfTemporary.Dato)))   # Lager en ny index slik at man kan hente resultat for riktig lag. Indeksen fra dfSesong følger over til dfTemporary, så dette er nødvendig.
         dfTemporary = dfTemporary.set_index([dfTemporary.index, new_index]) # Setter inn den nye indeksen
+        resultater1 = []
         # Iterater gjennom dfTemporary
         for ii, rows in dfTemporary.iterrows():
-            if ii[1] > formLengde-1: # Må ha n-1 tidligere kamper i inneværende sesong for å kunne regne ut form
-                if dfTemporary.iloc[ii[1]]['Dato'][-4:] == dfTemporary.iloc[ii[1]-formLengde]['Dato'][-4:]:
-                    form = ''.join([str(dfTemporary.iloc[ii[1]-ix]['Resultat']) for ix in range(1,formLengde+1)])
-                    dfSesong.at[ii[0],'Form{form}'.format(form=formLengde)] = form
+            # Finner resultater fra tidligere kamper i sesongen
+            if rows.Hjemmelag == self.name:
+                resNum = int(dfTemporary.iloc[ii[1]]['Mål_hjemmelag']) - int(dfTemporary.iloc[ii[1]]['Mål_bortelag'])
+            elif rows.Bortelag == self.name:
+                resNum = int(dfTemporary.iloc[ii[1]]['Mål_bortelag']) - int(dfTemporary.iloc[ii[1]]['Mål_hjemmelag'])
+
+            if resNum > 0:
+                res = 'V'
+            elif resNum == 0:
+                res ='U'
+            elif resNum < 0:
+                res = 'T'
+            resultater1.append(res)
+            if rows.Hjemmelag == self.name:
+                if ii[1] > formLengde-1: # Må ha n-1 tidligere kamper i inneværende sesong for å kunne regne ut form
+                    if dfTemporary.iloc[ii[1]]['Dato'][-4:] == dfTemporary.iloc[ii[1]-formLengde]['Dato'][-4:]:
+                        form = ''.join([str(resultater1[ii[1]-ix]) for ix in range(1,formLengde+1)])
+                        dfSesong.at[ii[0],'Form{form}'.format(form=formLengde)] = form[::-1] # backwards string
+                    else:
+                        dfSesong.at[ii[0],'Form{form}'.format(form=formLengde)] = 'For få kamper' # Dersom årene ikke er like, må kampen være blant de første i sesongen
                 else:
-                    dfSesong.at[ii[0],'Form{form}'.format(form=formLengde)] = 'For få kamper' # Dersom årene ikke er like, må kampen være blant de første i sesongen
-            else:
-                dfSesong.at[ii[0],'Form{form}'.format(form=formLengde)] = 'For få kamper' # Dersom indeks i dfTemporary ikke er større enn formLengde -1, er kampen nødt til å være blant de første i sesongen
-
-
-
+                    dfSesong.at[ii[0],'Form{form}'.format(form=formLengde)] = 'For få kamper' # Dersom indeks i dfTemporary ikke er større enn formLengde -1, er kampen nødt til å være blant de første i sesongen
 
 
 viking = Fotballag('Viking', 'Viking Stadion', 'Stavanger')
@@ -293,7 +295,6 @@ for t in tv_kanal:
 
 # Lager en liste som skal bli kolonnen "Resultater". Denne er tom
 # fordi den da kan fylles ut gjennom en iteration senere i scriptet (rad 248 i scriptet)
-resultater = ["-"]*len(datoerOrdnet)
 maal_forrige_hjemmekamp = ["-"]*len(datoerOrdnet)
 derby = ["-"]*len(datoerOrdnet)
 rival = ["-"]*len(datoerOrdnet)
@@ -308,7 +309,7 @@ time.sleep(1)
 HovedDataSet = list(zip(datoerOrdnet,
                         hjemmelagOrdnet, bortelagOrdnet,
                         tilskuertall,
-                        hjemmelagGoals, bortelagGoals, resultater,
+                        hjemmelagGoals, bortelagGoals,
                         maal_forrige_hjemmekamp,
                         tv_kanal))
     # lager tabellen med pandas
@@ -316,7 +317,7 @@ dfSesong = pandas.DataFrame(data=HovedDataSet,
                                 columns=['Dato',
                                          'Hjemmelag', 'Bortelag',
                                          'Tilskuertall',
-                                         'Mål_hjemmelag', 'Mål_bortelag', 'Resultat', 'Mål forrige hjemmekamp',
+                                         'Mål_hjemmelag', 'Mål_bortelag', 'Mål forrige hjemmekamp',
                                          'TV-kanal'])
 
 print("Ferdig å lage datasettet.")
@@ -550,7 +551,7 @@ print('Tid brukt for å finne informasjon om vær: {min} minutter og {sek} sekun
 
 # Lager en funksjon for enkel lagring
 
-dfSesong.to_csv('tilskuertall_271219.csv', encoding='iso8859_10')
+dfSesong.to_csv('tilskuertall_170119.csv', encoding='iso8859_10')
 
 # for å se antall av en verdi i en dataframe:
 # dfSesong['Ukedag'].value_counts()
