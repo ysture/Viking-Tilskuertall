@@ -61,6 +61,21 @@ class Fotballag:
                 else:
                     dfSesong.at[ii[0],'Form{form}'.format(form=formLengde)] = 'For få kamper' # Dersom indeks i dfTemporary ikke er større enn formLengde -1, er kampen nødt til å være blant de første i sesongen
 
+    def goalsLastHomegame(self):
+    # Finner antall scorede mål forrige hjemmekamp (for hjemmelaget) og lager en liste med alle forskjellige stadionnavn som lagres i objektet til laget
+        dfTemporary = dfSesong[(dfSesong.Hjemmelag == self.name)] # Lager en midlertidig df for hvert lag
+        new_index = list(range(0, len(dfTemporary.Dato)))   # Lager en ny index slik at man kan hente resultat for riktig lag. Indeksen fra dfSesong følger over til dfTemporary, så dette er nødvendig.
+        dfTemporary = dfTemporary.set_index([dfTemporary.index, new_index]) # Setter inn den nye indeksen
+        for ii, rows in dfTemporary.iterrows(): # Iterater gjennom dfTemporary
+            if ii[1] > 0:   # Den første hjemmekampen for hvert lag vil alltid ha indeks 0
+                if dfTemporary.iloc[ii[1]]['Dato'][-4:] == dfTemporary.iloc[ii[1]-1]['Dato'][-4:]:  # Sjekker at årene for de to resultatene som sammenlignes er like
+                    res = dfTemporary.iloc[ii[1]-1]['Mål_hjemmelag']     # Form1 tar resultatet fra lagets forrige kamp
+                    dfSesong.at[ii[0], 'Mål forrige hjemmekamp'] = res         # Dersom årene er like, er Form1 lik resultat fra forrige kamp
+                else:
+                    dfSesong.at[ii[0], 'Mål forrige hjemmekamp'] = "Første hjemmekamp i sesongen"    # Dersom årene ikke er like, må kampen være den første i sesongen
+            else:
+                dfSesong.at[ii[0], 'Mål forrige hjemmekamp'] = "Første hjemmekamp i sesongen"    # Dersom indeks i dfTemporary ikke er større enn 0, er kampen nødt til å være den første i sesongen
+
 
 viking = Fotballag('Viking', 'Viking Stadion', 'Stavanger')
 viking.derbylag = ['Sandnes Ulf', 'Haugesund', 'Bryne']
@@ -350,6 +365,7 @@ for team in Fotballag.instances:
     team.finnForm(1)
     team.finnForm(3)
     team.finnForm(5)
+    team.goalsLastHomegame()
 
 # Finner antall scorede mål forrige hjemmekamp (for hjemmelaget) og lager en liste med alle forskjellige stadionnavn som lagres i objektet til laget
 for team in Fotballag.instances: # Iterater gjennom alle fotballagene jeg har lagt inn
