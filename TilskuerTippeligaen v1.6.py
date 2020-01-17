@@ -31,7 +31,7 @@ class Fotballag:
                                         # Vær obs på at det er __repr__ som appendes, men dette har ikke noe å si
                                         # når målet er å tråle gjennom (iterate) gjennom listen
 
-    def finnForm(self, formLengde):
+    def finnForm(self, formLengde, poeng = True):
         dfTemporary = dfSesong[(dfSesong.Hjemmelag == self.name) | (dfSesong.Bortelag == self.name)] # Lager en midlertidig df for hvert lag
         new_index = list(range(0, len(dfTemporary.Dato)))   # Lager en ny index slik at man kan hente resultat for riktig lag. Indeksen fra dfSesong følger over til dfTemporary, så dette er nødvendig.
         dfTemporary = dfTemporary.set_index([dfTemporary.index, new_index]) # Setter inn den nye indeksen
@@ -44,37 +44,58 @@ class Fotballag:
             elif rows.Bortelag == self.name:
                 resNum = int(dfTemporary.iloc[ii[1]]['Mål_bortelag']) - int(dfTemporary.iloc[ii[1]]['Mål_hjemmelag'])
 
-            if resNum > 0:
-                res = 'V'
-            elif resNum == 0:
-                res ='U'
-            elif resNum < 0:
-                res = 'T'
-            resultater1.append(res)
-            if rows.Hjemmelag == self.name:
-                if ii[1] > formLengde-1: # Må ha n-1 tidligere kamper i inneværende sesong for å kunne regne ut form
-                    if dfTemporary.iloc[ii[1]]['Dato'][-4:] == dfTemporary.iloc[ii[1]-formLengde]['Dato'][-4:]:
-                        form = ''.join([str(resultater1[ii[1]-ix]) for ix in range(1,formLengde+1)])
-                        dfSesong.at[ii[0],'Form{form}'.format(form=formLengde)] = form[::-1] # backwards string
+            if poeng == False:
+                if resNum > 0:
+                    res = 'V'
+                elif resNum == 0:
+                    res ='U'
+                elif resNum < 0:
+                    res = 'T'
+                resultater1.append(res)
+                if rows.Hjemmelag == self.name:
+                    if ii[1] > formLengde-1: # Må ha n-1 tidligere kamper i inneværende sesong for å kunne regne ut form
+                        if dfTemporary.iloc[ii[1]]['Dato'][-4:] == dfTemporary.iloc[ii[1]-formLengde]['Dato'][-4:]:
+                            form = ''.join([str(resultater1[ii[1]-ix]) for ix in range(1,formLengde+1)])
+                            dfSesong.at[ii[0],'Form{form}'.format(form=formLengde)] = form[::-1] # backwards string
+                        else:
+                            dfSesong.at[ii[0],'Form{form}'.format(form=formLengde)] = 'For få kamper' # Dersom årene ikke er like, må kampen være blant de første i sesongen
                     else:
-                        dfSesong.at[ii[0],'Form{form}'.format(form=formLengde)] = 'For få kamper' # Dersom årene ikke er like, må kampen være blant de første i sesongen
-                else:
-                    dfSesong.at[ii[0],'Form{form}'.format(form=formLengde)] = 'For få kamper' # Dersom indeks i dfTemporary ikke er større enn formLengde -1, er kampen nødt til å være blant de første i sesongen
+                        dfSesong.at[ii[0],'Form{form}'.format(form=formLengde)] = 'For få kamper' # Dersom indeks i dfTemporary ikke er større enn formLengde -1, er kampen nødt til å være blant de første i sesongen
+            elif poeng == True:
+                if resNum > 0:
+                    res = 3
+                elif resNum == 0:
+                    res = 1
+                elif resNum < 0:
+                    res = 0
+                resultater1.append(res)
+                form = 0 # Initializing points in form
+                if rows.Hjemmelag == self.name:
+                    if ii[1] > formLengde-1: # Må ha n-1 tidligere kamper i inneværende sesong for å kunne regne ut form
+                        if dfTemporary.iloc[ii[1]]['Dato'][-4:] == dfTemporary.iloc[ii[1]-formLengde]['Dato'][-4:]:
+                            for ix in range(1, formLengde+1):
+                                form += resultater1[ii[1]-ix]
+                            dfSesong.at[ii[0],'Form{form}'.format(form=formLengde)] = form # backwards string
+                        else:
+                            dfSesong.at[ii[0],'Form{form}'.format(form=formLengde)] = 'For få kamper' # Dersom årene ikke er like, må kampen være blant de første i sesongen
+                    else:
+                        dfSesong.at[ii[0],'Form{form}'.format(form=formLengde)] = 'For få kamper' # Dersom indeks i dfTemporary ikke er større enn formLengde -1, er kampen nødt til å være blant de første i sesongen
+
 
     def goalsLastHomegame(self):
-    # Finner antall scorede mål forrige hjemmekamp (for hjemmelaget) og lager en liste med alle forskjellige stadionnavn som lagres i objektet til laget
-        dfTemporary = dfSesong[(dfSesong.Hjemmelag == self.name)] # Lager en midlertidig df for hvert lag
-        new_index = list(range(0, len(dfTemporary.Dato)))   # Lager en ny index slik at man kan hente resultat for riktig lag. Indeksen fra dfSesong følger over til dfTemporary, så dette er nødvendig.
-        dfTemporary = dfTemporary.set_index([dfTemporary.index, new_index]) # Setter inn den nye indeksen
-        for ii, rows in dfTemporary.iterrows(): # Iterater gjennom dfTemporary
-            if ii[1] > 0:   # Den første hjemmekampen for hvert lag vil alltid ha indeks 0
-                if dfTemporary.iloc[ii[1]]['Dato'][-4:] == dfTemporary.iloc[ii[1]-1]['Dato'][-4:]:  # Sjekker at årene for de to resultatene som sammenlignes er like
-                    res = dfTemporary.iloc[ii[1]-1]['Mål_hjemmelag']     # Form1 tar resultatet fra lagets forrige kamp
-                    dfSesong.at[ii[0], 'Mål forrige hjemmekamp'] = res         # Dersom årene er like, er Form1 lik resultat fra forrige kamp
+        # Finner antall scorede mål forrige hjemmekamp (for hjemmelaget) og lager en liste med alle forskjellige stadionnavn som lagres i objektet til laget
+            dfTemporary = dfSesong[(dfSesong.Hjemmelag == self.name)] # Lager en midlertidig df for hvert lag
+            new_index = list(range(0, len(dfTemporary.Dato)))   # Lager en ny index slik at man kan hente resultat for riktig lag. Indeksen fra dfSesong følger over til dfTemporary, så dette er nødvendig.
+            dfTemporary = dfTemporary.set_index([dfTemporary.index, new_index]) # Setter inn den nye indeksen
+            for ii, rows in dfTemporary.iterrows(): # Iterater gjennom dfTemporary
+                if ii[1] > 0:   # Den første hjemmekampen for hvert lag vil alltid ha indeks 0
+                    if dfTemporary.iloc[ii[1]]['Dato'][-4:] == dfTemporary.iloc[ii[1]-1]['Dato'][-4:]:  # Sjekker at årene for de to resultatene som sammenlignes er like
+                        res = dfTemporary.iloc[ii[1]-1]['Mål_hjemmelag']     # Form1 tar resultatet fra lagets forrige kamp
+                        dfSesong.at[ii[0], 'Mål forrige hjemmekamp'] = res         # Dersom årene er like, er Form1 lik resultat fra forrige kamp
+                    else:
+                        dfSesong.at[ii[0], 'Mål forrige hjemmekamp'] = "Første hjemmekamp i sesongen"    # Dersom årene ikke er like, må kampen være den første i sesongen
                 else:
-                    dfSesong.at[ii[0], 'Mål forrige hjemmekamp'] = "Første hjemmekamp i sesongen"    # Dersom årene ikke er like, må kampen være den første i sesongen
-            else:
-                dfSesong.at[ii[0], 'Mål forrige hjemmekamp'] = "Første hjemmekamp i sesongen"    # Dersom indeks i dfTemporary ikke er større enn 0, er kampen nødt til å være den første i sesongen
+                    dfSesong.at[ii[0], 'Mål forrige hjemmekamp'] = "Første hjemmekamp i sesongen"    # Dersom indeks i dfTemporary ikke er større enn 0, er kampen nødt til å være den første i sesongen
 
 
 viking = Fotballag('Viking', 'Viking Stadion', 'Stavanger')
@@ -310,7 +331,6 @@ for t in tv_kanal:
 
 # Lager en liste som skal bli kolonnen "Resultater". Denne er tom
 # fordi den da kan fylles ut gjennom en iteration senere i scriptet (rad 248 i scriptet)
-maal_forrige_hjemmekamp = ["-"]*len(datoerOrdnet)
 derby = ["-"]*len(datoerOrdnet)
 rival = ["-"]*len(datoerOrdnet)
 temperature = ["-"]*len(datoerOrdnet)
@@ -325,14 +345,13 @@ HovedDataSet = list(zip(datoerOrdnet,
                         hjemmelagOrdnet, bortelagOrdnet,
                         tilskuertall,
                         hjemmelagGoals, bortelagGoals,
-                        maal_forrige_hjemmekamp,
                         tv_kanal))
     # lager tabellen med pandas
 dfSesong = pandas.DataFrame(data=HovedDataSet,
                                 columns=['Dato',
                                          'Hjemmelag', 'Bortelag',
                                          'Tilskuertall',
-                                         'Mål_hjemmelag', 'Mål_bortelag', 'Mål forrige hjemmekamp',
+                                         'Mål_hjemmelag', 'Mål_bortelag',
                                          'TV-kanal'])
 
 print("Ferdig å lage datasettet.")
@@ -366,21 +385,6 @@ for team in Fotballag.instances:
     team.finnForm(3)
     team.finnForm(5)
     team.goalsLastHomegame()
-
-# Finner antall scorede mål forrige hjemmekamp (for hjemmelaget) og lager en liste med alle forskjellige stadionnavn som lagres i objektet til laget
-for team in Fotballag.instances: # Iterater gjennom alle fotballagene jeg har lagt inn
-    dfTemporary = dfSesong[(dfSesong.Hjemmelag == team.name)] # Lager en midlertidig df for hvert lag
-    new_index = list(range(0, len(dfTemporary.Dato)))   # Lager en ny index slik at man kan hente resultat for riktig lag. Indeksen fra dfSesong følger over til dfTemporary, så dette er nødvendig.
-    dfTemporary = dfTemporary.set_index([dfTemporary.index, new_index]) # Setter inn den nye indeksen
-    for ii, rows in dfTemporary.iterrows(): # Iterater gjennom dfTemporary
-        if ii[1] > 0:   # Den første hjemmekampen for hvert lag vil alltid ha indeks 0
-            if dfTemporary.iloc[ii[1]]['Dato'][-4:] == dfTemporary.iloc[ii[1]-1]['Dato'][-4:]:  # Sjekker at årene for de to resultatene som sammenlignes er like
-                res = dfTemporary.iloc[ii[1]-1]['Mål_hjemmelag']     # Form1 tar resultatet fra lagets forrige kamp
-                dfSesong.set_value(ii[0], 'Mål forrige hjemmekamp', res)         # Dersom årene er like, er Form1 lik resultat fra forrige kamp
-            else:
-                dfSesong.set_value(ii[0], 'Mål forrige hjemmekamp', "Første hjemmekamp i sesongen")    # Dersom årene ikke er like, må kampen være den første i sesongen
-        else:
-            dfSesong.set_value(ii[0], 'Mål forrige hjemmekamp', "Første hjemmekamp i sesongen")    # Dersom indeks i dfTemporary ikke er større enn 0, er kampen nødt til å være den første i sesongen
 
 print('Fant lagenes form.')
 #---------------------------------------------------------#
