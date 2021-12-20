@@ -1,0 +1,30 @@
+page = requests.get(url)
+soup = BeautifulSoup(page.content, "html.parser")
+
+
+def fetch_away_teams_per_season(soup):
+    bortelag = [lag.text[1:].replace('\xa0', ' ') for lag in soup.find_all('', class_="sd_fixtures_away")]
+    return bortelag
+  
+  
+ def fetch_home_teams_per_season(soup):
+    hjemmelag = [lag.text[1:].replace('\xa0', ' ') for lag in soup.find_all('', class_="sd_fixtures_home")]
+    return hjemmelag
+    
+    
+    
+ def fetch_results_per_season(soup):
+    # Resultatene på i stringen ligger på formen 'x - y'
+    homeGoals = [int(resultat.text[0]) for resultat in soup.find_all("a", class_="sd_fixtures_score")]
+    awayGoals = [int(resultat.text[-1]) for resultat in soup.find_all("a", class_="sd_fixtures_score")]
+    
+    return homeGoals, awayGoals
+    
+    
+ def fetch_dates_per_season(soup):
+    # Finner dato for kampene
+    dates = [date.text for date in soup.find_all('', class_="sd_fixtures_date")]
+    
+    return dates
+    
+
