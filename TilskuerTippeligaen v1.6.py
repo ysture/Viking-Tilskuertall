@@ -172,7 +172,10 @@ bortelagOrdnet = [elem.replace('\xa0', ' ') for elem in bortelagOrdnet]
 #---------------------------------------------------------#
 #---------------------------------------------------------#
 
-# Finner tilskuertall for hver kamp i hver sesong
+# Funksjon for å finne tilskuertall for hver kamp i hver sesong
+
+def find_attendance(url)
+
 urlKamperUordnet = []
 urlKamperForMange = []
 urlKamper = []
