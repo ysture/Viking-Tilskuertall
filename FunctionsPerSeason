@@ -27,4 +27,12 @@ def fetch_away_teams_per_season(soup):
     
     return dates
     
+ def fetch_tv_channels_per_season(soup)
+    # Finner tv-kanal kampen ble sendt på
+    channels = [kanal.text for kanal in soup.find_all(class_= "sd_fixtures_channels")]
+    
+    return channels
+    
+ 
+ 
 
